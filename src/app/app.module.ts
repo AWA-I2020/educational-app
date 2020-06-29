@@ -10,12 +10,21 @@ import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { SignInComponent } from "./authentication/sign-in/sign-in.component";
 import { SignUpComponent } from "./authentication/sign-up/sign-up.component";
+import { ServiceWorkerModule } from "@angular/service-worker";
+import { environment } from "../environments/environment";
 
 @NgModule({
   exports: [SignInComponent, SignUpComponent],
   declarations: [AppComponent, SignInComponent, SignUpComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    ServiceWorkerModule.register("ngsw-worker.js", {
+      enabled: environment.production,
+    }),
+  ],
   providers: [
     StatusBar,
     SplashScreen,
