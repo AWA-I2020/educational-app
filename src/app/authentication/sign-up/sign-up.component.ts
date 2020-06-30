@@ -6,7 +6,9 @@ import {
   AbstractControl,
 } from "@angular/forms";
 import { ToastController } from "@ionic/angular";
-import { Router } from '@angular/router';
+import { Router } from "@angular/router";
+import * as CryptoJS from "crypto-js";
+import { User } from "src/app/models/user";
 
 @Component({
   selector: "app-sign-up",
@@ -21,12 +23,30 @@ export class SignUpComponent implements OnInit {
     password: new FormControl("", Validators.required),
     role: new FormControl("", Validators.required),
   });
-  constructor(private toastController: ToastController, private router: Router) {}
+  constructor(
+    private toastController: ToastController,
+    private router: Router
+  ) {}
 
   ngOnInit() {}
 
-  onSubmit() {}
+  onSubmit() {
+    let nameNormalized: string = this.completeName.value;
+    nameNormalized = nameNormalized.replace(/\s+/g, "").toLowerCase();
+    let password: string = this.convertText(nameNormalized);
+    let user: User = {
+      completeName: this.completeName.value,
+      completeNameNormalizad: nameNormalized,
+      password: password,
+      role: this.role.value,
+      email: this.email.value,
+    };
+    console.log(user);
+  }
 
+  private convertText(password: string) {
+    return CryptoJS.AES.encrypt(this.password.value, password).toString();
+  }
   async presentToast(message: string) {
     const toast = await this.toastController.create({
       message: message,
