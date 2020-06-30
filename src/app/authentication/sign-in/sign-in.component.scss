@@ -1,0 +1,8 @@
+$web-width: 720px;
+
+ion-col {
+    max-width: $web-width;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
