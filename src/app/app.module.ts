@@ -12,6 +12,7 @@ import { SignInComponent } from "./authentication/sign-in/sign-in.component";
 import { SignUpComponent } from "./authentication/sign-up/sign-up.component";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from "../environments/environment";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 
 @NgModule({
   exports: [SignInComponent, SignUpComponent],
@@ -24,6 +25,8 @@ import { environment } from "../environments/environment";
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production,
     }),
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [
     StatusBar,
