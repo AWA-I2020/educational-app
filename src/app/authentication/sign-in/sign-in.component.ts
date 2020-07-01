@@ -1,25 +1,91 @@
-import { Component, OnInit, NgZone } from '@angular/core';
-import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
-import { ToastController } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { Component, OnInit, NgZone } from "@angular/core";
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  AbstractControl,
+} from "@angular/forms";
+import { ToastController, LoadingController } from "@ionic/angular";
+import { Router } from "@angular/router";
+
+import * as CryptoJS from "crypto-js";
+import { Platform } from "@ionic/angular";
+import { Plugins } from "@capacitor/core";
+import { AuthenticationService } from "src/app/services/auth/authentication.service";
+import { User } from "src/app/models/user";
+const { Storage } = Plugins;
 
 @Component({
-  selector: 'app-sign-in',
-  templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.scss'],
+  selector: "app-sign-in",
+  templateUrl: "./sign-in.component.html",
+  styleUrls: ["./sign-in.component.scss"],
 })
 export class SignInComponent implements OnInit {
   signInForm = new FormGroup({
     completeName: new FormControl("", Validators.required),
     password: new FormControl("", Validators.required),
   });
-  constructor(private toastController: ToastController,
+  constructor(
+    private toastController: ToastController,
     private router: Router,
-    private ngZone: NgZone) { }
+    private authService: AuthenticationService,
+    private platform: Platform,
+    private loadingController: LoadingController
+  ) {}
 
   ngOnInit() {}
 
-  onSubmit(){}
+  onSubmit() {
+    this.presentLoading();
+    let nameNormalized: string = this.completeName.value;
+    nameNormalized = nameNormalized.replace(/\s+/g, "").toLowerCase();
+    this.authService.searchUser(nameNormalized).subscribe(async (userData) => {
+      if (userData.length > 0) {
+        let user: User = userData[0];
+        if (
+          this.password.value ===
+          this.convertText(user.password, user.completeNameNormalizad)
+        ) {
+          this.signInForm.reset();
+          user.password = "";
+          this.dismiss();
+          if (this.platform.is("desktop")) {
+            localStorage.setItem("user", JSON.stringify(user));
+            this.presentToast("Inició sesión correctamente.");
+          } else {
+            await Storage.set({ key: "user", value: JSON.stringify(user) });
+            this.presentToast("Inició sesión correctamente.");
+          }
+          if (user.role === "Profesor") {
+            this.router.navigate(["teacher"]);
+          } else {
+            if (user.role === "Estudiante") {
+              this.router.navigate(["teacher"]);
+            } else {
+              this.router.navigate(["parent"]);
+            }
+          }
+        } else {
+          this.presentToast("Credenciales incorrectos.");
+          this.password.setValue("");
+        }
+      } else {
+        this.presentToast("Usuario no existe, regístrese.");
+        this.signInForm.reset();
+      }
+    });
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: "Cargando..",
+    });
+    await loading.present();
+  }
+
+  dismiss() {
+    this.loadingController.dismiss();
+  }
 
   async presentToast(message: string) {
     const toast = await this.toastController.create({
@@ -27,6 +93,11 @@ export class SignInComponent implements OnInit {
       duration: 2000,
     });
     toast.present();
+  }
+  private convertText(password: string, secretPass: string) {
+    return CryptoJS.AES.decrypt(password, secretPass).toString(
+      CryptoJS.enc.Utf8
+    );
   }
 
   goToSignUp() {
