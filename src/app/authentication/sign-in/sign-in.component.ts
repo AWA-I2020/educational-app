@@ -7,13 +7,10 @@ import {
 } from "@angular/forms";
 import { ToastController, LoadingController } from "@ionic/angular";
 import { Router } from "@angular/router";
-
 import * as CryptoJS from "crypto-js";
-import { Platform } from "@ionic/angular";
-import { Plugins } from "@capacitor/core";
 import { AuthenticationService } from "src/app/services/auth/authentication.service";
+import { NgxIndexedDBService } from "ngx-indexed-db";
 import { User } from "src/app/models/user";
-const { Storage } = Plugins;
 
 @Component({
   selector: "app-sign-in",
@@ -29,8 +26,8 @@ export class SignInComponent implements OnInit {
     private toastController: ToastController,
     private router: Router,
     private authService: AuthenticationService,
-    private platform: Platform,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private dbService: NgxIndexedDBService
   ) {}
 
   ngOnInit() {}
@@ -49,22 +46,23 @@ export class SignInComponent implements OnInit {
           this.signInForm.reset();
           user.password = "";
           this.dismiss();
-          if (this.platform.is("desktop")) {
-            localStorage.setItem("user", JSON.stringify(user));
-            this.presentToast("Inició sesión correctamente.");
-          } else {
-            await Storage.set({ key: "user", value: JSON.stringify(user) });
-            this.presentToast("Inició sesión correctamente.");
-          }
-          if (user.role === "Profesor") {
-            this.router.navigate(["teacher"]);
-          } else {
-            if (user.role === "Estudiante") {
-              this.router.navigate(["teacher"]);
-            } else {
-              this.router.navigate(["parent"]);
+          this.dbService.add("user", user).then(
+            () => {
+              this.presentToast("Inició sesión correctamente.");
+              if (user.role === "Profesor") {
+                this.router.navigate(["teacher"]);
+              } else {
+                if (user.role === "Estudiante") {
+                  this.router.navigate(["teacher"]);
+                } else {
+                  this.router.navigate(["parent"]);
+                }
+              }
+            },
+            (error) => {
+              console.log(error);
             }
-          }
+          );
         } else {
           this.dismiss();
           this.presentToast("Credenciales incorrectos.");

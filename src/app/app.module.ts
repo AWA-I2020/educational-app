@@ -15,6 +15,32 @@ import { SignUpComponent } from "./authentication/sign-up/sign-up.component";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from "../environments/environment";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { NgxIndexedDBModule, DBConfig } from "ngx-indexed-db";
+
+const dbConfig: DBConfig = {
+  name: "EducationalDb",
+  version: 1,
+  objectStoresMeta: [
+    {
+      store: "user",
+      storeConfig: { keyPath: "id", autoIncrement: true },
+      storeSchema: [
+        {
+          name: "completeName",
+          keypath: "completeName",
+          options: { unique: false },
+        },
+        {
+          name: "completeNameNormalizad",
+          keypath: "completeNameNormalizad",
+          options: { unique: false },
+        },
+        { name: "role", keypath: "role", options: { unique: false } },
+        { name: "id", keypath: "id", options: { unique: false } },
+      ],
+    },
+  ],
+};
 
 @NgModule({
   exports: [SignInComponent, SignUpComponent],
@@ -31,6 +57,7 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
     }),
     FormsModule,
     ReactiveFormsModule,
+    NgxIndexedDBModule.forRoot(dbConfig),
   ],
   providers: [
     StatusBar,
