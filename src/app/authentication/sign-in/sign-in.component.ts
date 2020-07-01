@@ -66,10 +66,12 @@ export class SignInComponent implements OnInit {
             }
           }
         } else {
+          this.dismiss();
           this.presentToast("Credenciales incorrectos.");
           this.password.setValue("");
         }
       } else {
+        this.dismiss();
         this.presentToast("Usuario no existe, regístrese.");
         this.signInForm.reset();
       }
