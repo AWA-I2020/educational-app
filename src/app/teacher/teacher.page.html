@@ -1,16 +1,22 @@
 <ion-menu side="start" menuId="first" contentId="main">
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Teacher</ion-title>
-  </ion-toolbar>
-</ion-header>
-<ion-content>
-  <ion-list>
-    <ion-item>Perfil<ion-icon slot="end" name="person"></ion-icon></ion-item>
-    <ion-item>Mis Clases <ion-icon slot="end" name="people"></ion-icon></ion-item>
-    <ion-item>Cerrar Sesion<ion-icon slot="end" name="log-out"></ion-icon></ion-item>
-  </ion-list>
-</ion-content>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Teacher</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item button (click)="changePage(0,'Perfil')">Perfil
+        <ion-icon slot="end" name="person"></ion-icon>
+      </ion-item>
+      <ion-item button (click)="changePage(1,'Mis Clases')">Mis Clases
+        <ion-icon slot="end" name="people"></ion-icon>
+      </ion-item>
+      <ion-item button (click)="changePage(2, 'Cerrar Sesion')">Cerrar Sesion
+        <ion-icon slot="end" name="log-out"></ion-icon>
+      </ion-item>
+    </ion-list>
+  </ion-content>
 </ion-menu>
 
 <ion-router-outlet id="main"></ion-router-outlet>
@@ -20,9 +26,117 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Educational App</ion-title>
+    <ion-title>{{pageTitle}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="back()" *ngIf="page != 1 disabled">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <!-- perfil -->
+  <ng-template [ngIf]="page == 0">
+    <!-- here the perfil selector component -->
+  </ng-template>
+  <!-- end perfil -->
+
+  <!-- class -->
+  <ng-template [ngIf]="page == 1">
+    <div *ngFor="let class of currentClass()">
+      <ion-card button (click)="changePage(2,class.title+' '+class.curso+' '+class.paralelo,class)">
+        <ion-card-header>
+          <ion-card-content>{{class.title}}</ion-card-content>
+        </ion-card-header>
+        <ion-card-content>
+          {{class.content}}
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button color="danger" (click)="openModal(modalClass)">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </ng-template>
+  <!-- end class -->
+
+  <!-- navigation -->
+  <ng-template [ngIf]="page == 2">
+    <div>
+      <ion-segment [(ngModel)]="tabs" value="resource">
+        <ion-segment-button value="resource">
+          Recursos
+        </ion-segment-button>
+        <ion-segment-button value="activity">
+          Actividades
+        </ion-segment-button>
+        <ion-segment-button value="students">
+          Estudiantes
+        </ion-segment-button>
+        <ion-segment-button value="options">
+          <ion-icon name="cog"></ion-icon>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+    <div [ngSwitch]="tabs">
+      <div *ngSwitchCase="'students'">
+        <br>
+        <ion-title>Estudiantes De La Materia</ion-title><br>
+        Content Students
+      </div>
+      <div *ngSwitchCase="'resource'">
+        <br>
+        <ion-title>Recursos De La Materia</ion-title><br>
+        Content Resource
+        <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+          <ion-fab-button color="danger" (click)="openModal(modalResource)">
+            <ion-icon name="add"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+      </div>
+      <div *ngSwitchCase="'activity'">
+        <br>
+        <ion-title>Actividades De La Materia</ion-title><br>
+        Content Activity
+        <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+          <ion-fab-button color=danger>
+            <ion-icon name="add"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-list side="top">
+            <ion-fab-button (click)="openModal(modalHome)">
+              <ion-icon name="home"></ion-icon>
+            </ion-fab-button>
+          </ion-fab-list>
+          <ion-fab-list side="start">
+            <ion-fab-button (click)="openModal(modalQuestion)">
+              <ion-icon name="clipboard"></ion-icon>
+            </ion-fab-button>
+          </ion-fab-list>
+        </ion-fab>
+      </div>
+
+      <div *ngSwitchCase="'options'">
+
+        <br>
+        <ion-title>Opciones</ion-title><br>
+        <ion-item>
+          <ion-label>Codigo De Curso</ion-label><br>
+          #98796431
+        </ion-item>
+
+        <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+          <ion-fab-button color="dark">
+            <ion-icon name="trash"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+
+      </div>
+    </div>
+  </ng-template>
+  <!-- end navigation -->
+
+  <ng-template [ngIf]="page == 3">3</ng-template>
+
 </ion-content>
