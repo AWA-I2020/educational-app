@@ -1,3 +1,103 @@
-<p>
-  sign-up works!
-</p>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Registrate</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-align-self-center">
+        <ion-card class="ion-no-padding">
+          <ion-card-header class="ion-text-center" color="secondary">
+            <ion-card-title>Crear nueva cuenta</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+              <ion-item>
+                <ion-label position="floating"
+                  >Nombre completo<ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input
+                  required
+                  formControlName="completeName"
+                  type="text"
+                ></ion-input>
+                <div
+                  class="small form-text text-danger"
+                  *ngIf="completeName.touched && completeName.invalid"
+                >
+                  <div *ngIf="completeName.errors['required']">
+                    <ion-text color="danger">
+                      <h6>Nombre es requerido</h6>
+                    </ion-text>
+                  </div>
+                </div>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating"
+                  >Correo (Opcional)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input formControlName="email" type="text"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating"
+                  >Contrasena <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input
+                  required
+                  formControlName="password"
+                  type="password"
+                ></ion-input>
+                <div
+                  class="small form-text text-danger"
+                  *ngIf="password.touched && password.invalid"
+                >
+                  <div *ngIf="password.errors['required']">
+                    <ion-text color="danger">
+                      <h6>Contrasena es requerida</h6>
+                    </ion-text>
+                  </div>
+                  <div *ngIf="password.errors['minLength']">
+                    <ion-text color="danger">
+                      <h6>Contrasena debe tener 8 caracteres minimo</h6>
+                    </ion-text>
+                  </div>
+                </div>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  Tipo de Usuario <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-select formControlName="role">
+                  <ion-select-option
+                    *ngFor="let user of users"
+                    [value]="user"
+                    >{{ user }}</ion-select-option
+                  >
+                </ion-select>
+              </ion-item>
+              <br />
+              <ion-button
+                expand="block"
+                color="primary"
+                type="submit"
+                [disabled]="signUpForm.invalid"
+              >
+                Registrar <ion-icon slot="end" name="person-add"></ion-icon>
+              </ion-button>
+            </form>
+            <br />
+            <ion-text color="primary" (click)="goToSignIn()">
+              <h6>Ya tiene una cuenta?</h6>
+            </ion-text>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
