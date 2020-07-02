@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Agregar Nueva Clase</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">Materia</ion-label>
+      <ion-select multiple okText="Aceptar" cancelText="Cerrar">
+        <ion-select-option value="{{materia}}" *ngFor="let materia of materias">{{materia}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Curso</ion-label>
+      <ion-select multiple okText="Aceptar" cancelText="Cerrar">
+        <ion-select-option value={{curso}} *ngFor="let curso of cursos">{{curso}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Paralelo</ion-label>
+      <ion-select multiple okText="Aceptar" cancelText="Cerrar">
+        <ion-select-option value={{paralelo}} *ngFor="let paralelo of paralelos">{{paralelo}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button color="success">
+      <ion-icon name="checkmark"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>
