@@ -20,7 +20,7 @@
       </ion-row>
     </ion-grid>
   </ion-item>
-  <ion-item>
+  <ion-item *ngIf="user.role == 'Estudiante'">
     <ion-grid fixed>
       <ion-row>
         <ion-label>Codigo de estudiante:</ion-label>
