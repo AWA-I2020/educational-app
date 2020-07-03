@@ -31,7 +31,7 @@ export class AuthenticationService {
             this.router.navigate(["teacher"]);
           } else {
             if (this.user.role === "Estudiante") {
-              this.router.navigate(["teacher"]);
+              this.router.navigate(["student"]);
             } else {
               if (this.user.role === "Padre de Familia") {
                 this.router.navigate(["parent"]);
