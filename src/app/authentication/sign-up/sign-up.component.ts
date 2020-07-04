@@ -11,6 +11,7 @@ import * as CryptoJS from "crypto-js";
 import { User } from "src/app/models/user";
 import { AuthenticationService } from "src/app/services/auth/authentication.service";
 import { LoadingController } from "@ionic/angular";
+import { ParentService } from "src/app/services/parent/parent.service";
 
 @Component({
   selector: "app-sign-up",
@@ -29,7 +30,8 @@ export class SignUpComponent implements OnInit {
     private authService: AuthenticationService,
     private toastController: ToastController,
     private router: Router,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private parentService: ParentService
   ) {}
 
   ngOnInit() {}
@@ -51,6 +53,9 @@ export class SignUpComponent implements OnInit {
         if (user) {
           user.id = data.id;
           this.authService.updateUser(user).then(() => {
+            if (user.role === "Padre de familia") {
+              this.parentService.addParent({ id: user.id, children: [] });
+            }
             this.dismiss();
             this.presentToast("Usuario registrado, inicia sesión.");
             this.router.navigate(["sign-in"]);
