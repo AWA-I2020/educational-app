@@ -8,7 +8,7 @@ import { Resource } from "src/app/models/resource";
 import { Observable } from "rxjs";
 import { AngularFireStorage } from "@angular/fire/storage";
 import { FileUpload } from "src/app/models/file";
-import { finalize } from "rxjs/operators";
+import { finalize, map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
@@ -31,13 +31,21 @@ export class ResourceService {
       .collection<Resource>("resources", (ref) =>
         ref.where("class_id", "==", id)
       )
-      .valueChanges();
+      .snapshotChanges()
+      .pipe(
+        map((actions) => {
+          return actions.map((a) => {
+            const data = a.payload.doc.data();
+            const id = a.payload.doc.id;
+            return { id, ...data };
+          });
+        })
+      );
   }
 
   pushFileToStorage(
     fileUpload: FileUpload,
-    className: string,
-    data: Resource
+    className: string
   ): Observable<number> {
     const filePath = `resources/${className}/${fileUpload.file.name}`;
     const storageRef = this.storage.ref(filePath);
@@ -50,8 +58,6 @@ export class ResourceService {
           storageRef.getDownloadURL().subscribe((downloadURL) => {
             fileUpload.url = downloadURL;
             fileUpload.name = fileUpload.file.name;
-            data.fileURL = downloadURL;
-            this.addResource(data);
           });
         })
       )
