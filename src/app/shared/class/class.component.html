@@ -18,88 +18,98 @@
     <ion-card-content>
       <ion-slides pager="true" [options]="sliderConfig">
         <ion-slide>
-          <ion-list>
+          <ion-list *ngIf="resources.length > 0; else noResources">
             <ion-list-header>
               Recursos
             </ion-list-header>
-            <ion-item>
-              <ion-label>Awesome Label</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label>Awesome Label</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label>Awesome Label</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label>Awesome Label</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label>Awesome Label</ion-label>
+            <ion-item
+              button
+              *ngFor="let resource of resources"
+              (click)="openResource(resource)"
+            >
+              <ion-label>{{ resource.name }}</ion-label>
             </ion-item>
           </ion-list>
+          <ng-template #noResources>
+            <ion-list>
+              <ion-list-header>
+                Recursos
+              </ion-list-header>
+              <ion-item>
+                No se publicaron recursos.
+              </ion-item>
+            </ion-list>
+          </ng-template>
           <br />
-          <ion-fab vertical="top" horizontal="end" slot="fixed">
-            <ion-fab-button>
+          <ion-fab
+            vertical="top"
+            horizontal="end"
+            slot="fixed"
+            *ngIf="user.role == 'Profesor'"
+          >
+            <ion-fab-button (click)="addResource()">
               <ion-icon name="add"></ion-icon>
             </ion-fab-button>
           </ion-fab>
         </ion-slide>
         <ion-slide>
-          <ion-list>
+          <ion-list *ngIf="activities.length > 0; else noActivities">
             <ion-list-header>
               Actividades
             </ion-list-header>
-            <ion-item>
-              <ion-label>Awesome Label</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label>Awesome Label</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label>Awesome Label</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label>Awesome Label</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label>Awesome Label</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label>Awesome Label</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label>Awesome Label</ion-label>
+            <ion-item
+              button
+              *ngFor="let activity of activities"
+              (click)="openActivity(activity)"
+            >
+              <ion-label>{{ activity.name }}</ion-label>
             </ion-item>
           </ion-list>
+          <ng-template #noActivities>
+            <ion-list>
+              <ion-list-header>
+                Actividades
+              </ion-list-header>
+              <ion-item>
+                No se publicaron actividades.
+              </ion-item>
+            </ion-list>
+          </ng-template>
           <br />
-          <ion-fab vertical="top" horizontal="end" slot="fixed">
-            <ion-fab-button>
+          <ion-fab
+            vertical="top"
+            horizontal="end"
+            slot="fixed"
+            *ngIf="user.role == 'Profesor'"
+          >
+            <ion-fab-button (click)="addActivity()">
               <ion-icon name="add"></ion-icon>
             </ion-fab-button>
           </ion-fab>
         </ion-slide>
         <ion-slide *ngIf="user.role == 'Profesor'">
-          <ion-list>
+          <ion-list *ngIf="students.length > 0; else noStudents">
             <ion-list-header>
               Estudiantes
             </ion-list-header>
-            <ion-item>
-              <ion-label>Awesome Label</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label>Awesome Label</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label>Awesome Label</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label>Awesome Label</ion-label>
-            </ion-item>
-            <ion-item>
+            <ion-item
+              button
+              *ngFor="let student of students"
+              (click)="openStudent(student)"
+            >
               <ion-label>Awesome Label</ion-label>
             </ion-item>
           </ion-list>
+          <ng-template #noStudents>
+            <ion-list>
+              <ion-list-header>
+                Estudiantes
+              </ion-list-header>
+              <ion-item>
+                No se resgitraron estudiantes.
+              </ion-item>
+            </ion-list>
+          </ng-template>
           <br />
         </ion-slide>
       </ion-slides>
