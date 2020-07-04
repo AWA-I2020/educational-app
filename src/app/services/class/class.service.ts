@@ -5,6 +5,7 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
   DocumentReference,
+  AngularFirestoreDocument,
 } from "@angular/fire/firestore";
 import { Observable } from "rxjs";
 
@@ -29,6 +30,15 @@ export class ClassService {
         return collection;
       })
     );
+  }
+
+  updateClass(data: Class) {
+    const modelRef: AngularFirestoreDocument<Class> = this.afs.doc(
+      `classes/${data.id}`
+    );
+    return modelRef.set(data, {
+      merge: true,
+    });
   }
 
   deleteClass(id: string): Promise<void> {

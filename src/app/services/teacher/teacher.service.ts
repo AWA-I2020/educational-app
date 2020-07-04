@@ -8,7 +8,7 @@ import { AngularFirestore } from "@angular/fire/firestore";
 })
 export class TeacherService {
   constructor(private afs: AngularFirestore) {}
-  
+
   getClasses(id: string): Observable<Class[]> {
     return this.afs
       .collection<Class>("classes", (ref) => ref.where("teacher_id", "==", id))
