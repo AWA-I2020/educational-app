@@ -40,12 +40,9 @@ export class ModalAddClassComponent extends Modal {
         subject: this.subject.value,
         teacher_id: ((data[0] as unknown) as User).id,
       };
-      this.classService.addClass(classData).then((data) => {
-        classData.id = data.id;
-        this.classService.updateClass(classData).then(() => {
-          this.modalCtrl.dismiss();
-          this.presentToast("Clase añadida.");
-        });
+      this.classService.addClass(classData).then(() => {
+        this.modalCtrl.dismiss();
+        this.presentToast("Clase añadida.");
       });
     });
   }
