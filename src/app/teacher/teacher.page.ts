@@ -1,54 +1,93 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuController, ModalController } from '@ionic/angular';
-import { ModalAddResourceComponent } from './modals/modal-add-resource/modal-add-resource.component';
-import { ModalAddClassComponent } from './modals/modal-add-class/modal-add-class.component';
-import { ModalAddActivityHomeComponent } from './modals/modal-add-activity-home/modal-add-activity-home.component';
-import { ModalAddActivityQuestionComponent } from './modals/modal-add-activity-question/modal-add-activity-question.component';
+import { Component, OnInit } from "@angular/core";
+import {
+  MenuController,
+  ModalController,
+  ToastController,
+} from "@ionic/angular";
+import { ModalAddResourceComponent } from "./modals/modal-add-resource/modal-add-resource.component";
+import { ModalAddClassComponent } from "./modals/modal-add-class/modal-add-class.component";
+import { ModalAddActivityHomeComponent } from "./modals/modal-add-activity-home/modal-add-activity-home.component";
+import { ModalAddActivityQuestionComponent } from "./modals/modal-add-activity-question/modal-add-activity-question.component";
+import { Modal } from "./modals/modal";
+import { Class } from "../models/class";
+import { TeacherService } from "../services/teacher/teacher.service";
+import { NgxIndexedDBService } from "ngx-indexed-db";
+import { User } from "../models/user";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-teacher',
-  templateUrl: './teacher.page.html',
-  styleUrls: ['./teacher.page.scss'],
+  selector: "app-teacher",
+  templateUrl: "./teacher.page.html",
+  styleUrls: ["./teacher.page.scss"],
 })
 export class TeacherPage implements OnInit {
-
-  page = 1;
-  pageTitle = 'Mis clases';
+  page: number = 1;
+  pageTitle: string = "Mis clases";
   especificClass = {
-    title: '',
-    content: '',
-    paralelo: '',
+    title: "",
+    content: "",
+    paralelo: "",
   };
   backPage = 1;
   backTitle = this.pageTitle;
 
-  // modals
-  modalClass; modalResource; modalHome; modalQuestion;
-
-  constructor(private menu: MenuController, public modalController: ModalController) {
+  modalClass;
+  modalResource;
+  modalHome;
+  modalQuestion;
+  classes: Class[] = [];
+  constructor(
+    private menu: MenuController,
+    public modalController: ModalController,
+    private teacherService: TeacherService,
+    private indexedDbService: NgxIndexedDBService,
+    private toastController: ToastController,
+    private router: Router
+  ) {
     this.modalClass = ModalAddClassComponent;
     this.modalResource = ModalAddResourceComponent;
     this.modalHome = ModalAddActivityHomeComponent;
     this.modalQuestion = ModalAddActivityQuestionComponent;
   }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ionViewWillEnter() {
+    this.indexedDbService.getAll("user").then((data) => {
+      this.teacherService
+        .getClasses(((data[0] as unknown) as User).id)
+        .subscribe((classesData) => {
+          this.classes = classesData;
+        });
+    });
+  }
+
+  openClass(id: string) {
+    this.router.navigate(["/teacher/class", { id: id }]);
   }
 
   async openModal(modalComponent) {
-
     const modal = await this.modalController.create({
       component: modalComponent,
       componentProps: {
-        'modalCtrl': this.modalController,
-      }
+        modalCtrl: this.modalController,
+        toastController: this.toastController,
+        indexedDbService: this.indexedDbService,
+      },
     });
     return await modal.present();
   }
 
+  signOut() {
+    this.indexedDbService.clear("user").then(() => {
+      this.menu.close();
+      this.router.navigate(["sign-in"]);
+    });
+  }
+
   openFirst() {
-    this.menu.enable(true, 'first');
-    this.menu.open('first');
+    this.menu.enable(true, "first");
+    this.menu.open("first");
   }
 
   private changePage(valuePage, pageName, especificclass?) {
@@ -63,56 +102,5 @@ export class TeacherPage implements OnInit {
   private back() {
     this.page = this.backPage;
     this.pageTitle = this.backTitle;
-  }
-
-  private currentClass() {
-    var selfClass = [
-      {
-        title: "Test 1",
-        content: "Content 1",
-        paralelo: 'A',
-      },
-      {
-        title: "Test 1",
-        content: "Content 1",
-        paralelo: 'A',
-      },
-      {
-        title: "Test 1",
-        content: "Content 1",
-        paralelo: 'A',
-      },
-      {
-        title: "Test 1",
-        content: "Content 1",
-        paralelo: 'A',
-      },
-      {
-        title: "Test 1",
-        content: "Content 1",
-        paralelo: 'A',
-      },
-      {
-        title: "Test 1",
-        content: "Content 1",
-        paralelo: 'A',
-      },
-      {
-        title: "Test 1",
-        content: "Content 1",
-        paralelo: 'A',
-      },
-      {
-        title: "Test 1",
-        content: "Content 1",
-        paralelo: 'A',
-      },
-      {
-        title: "Test 1",
-        content: "Content 1",
-        paralelo: 'A',
-      },
-    ]
-    return selfClass;
   }
 }
