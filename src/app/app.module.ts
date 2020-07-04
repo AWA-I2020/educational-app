@@ -10,6 +10,7 @@ import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { AngularFireModule } from "@angular/fire";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
+import { AngularFireStorageModule } from "@angular/fire/storage";
 import { SignInComponent } from "./authentication/sign-in/sign-in.component";
 import { SignUpComponent } from "./authentication/sign-up/sign-up.component";
 import { ServiceWorkerModule } from "@angular/service-worker";
@@ -52,6 +53,7 @@ const dbConfig: DBConfig = {
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
+    AngularFireStorageModule,
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production,
     }),
