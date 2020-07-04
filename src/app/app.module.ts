@@ -17,6 +17,8 @@ import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from "../environments/environment";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { NgxIndexedDBModule, DBConfig } from "ngx-indexed-db";
+import { ClassComponent } from './shared/class/class.component';
+import { TeacherPageModule } from './teacher/teacher.module';
 
 const dbConfig: DBConfig = {
   name: "EducationalDb",
@@ -44,8 +46,8 @@ const dbConfig: DBConfig = {
 };
 
 @NgModule({
-  exports: [SignInComponent, SignUpComponent],
-  declarations: [AppComponent, SignInComponent, SignUpComponent],
+  exports: [SignInComponent, SignUpComponent, ClassComponent],
+  declarations: [AppComponent, SignInComponent, SignUpComponent, ClassComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -59,6 +61,7 @@ const dbConfig: DBConfig = {
     }),
     FormsModule,
     ReactiveFormsModule,
+    TeacherPageModule,
     NgxIndexedDBModule.forRoot(dbConfig),
   ],
   providers: [
