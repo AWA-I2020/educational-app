@@ -1,11 +1,16 @@
-import { ModalController, ToastController } from "@ionic/angular";
+import {
+  ModalController,
+  ToastController,
+  LoadingController,
+} from "@ionic/angular";
 import { Input, OnInit } from "@angular/core";
-import { NgxIndexedDBService } from 'ngx-indexed-db';
+import { NgxIndexedDBService } from "ngx-indexed-db";
 
 export class Modal implements OnInit {
   @Input() modalCtrl: ModalController;
   @Input() toastController: ToastController;
   @Input() indexedDbService: NgxIndexedDBService;
+  @Input() loadingController: LoadingController;
 
   ngOnInit() {}
 
@@ -21,5 +26,19 @@ export class Modal implements OnInit {
       duration: 2000,
     });
     toast.present();
+  }
+
+  loading(message: string) {
+    this.loadingController
+      .create({
+        message: message,
+      })
+      .then((loading) => {
+        loading.present();
+      });
+  }
+
+  dismissLoading() {
+    this.loadingController.dismiss();
   }
 }
