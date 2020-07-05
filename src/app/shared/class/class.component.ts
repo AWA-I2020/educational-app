@@ -9,6 +9,8 @@ import { ActivityService } from "src/app/services/activity/activity.service";
 import { Resource } from "src/app/models/resource";
 import { Activity } from "src/app/models/activity";
 import { ClassStudent } from "src/app/models/class-student";
+import { ModalController } from "@ionic/angular";
+import { ResourceComponent } from "../resource/resource.component";
 
 @Component({
   selector: "app-class",
@@ -29,7 +31,8 @@ export class ClassComponent implements OnInit {
     private indexedDb: NgxIndexedDBService,
     private classService: ClassService,
     private resourceService: ResourceService,
-    private activityService: ActivityService
+    private activityService: ActivityService,
+    private modalController: ModalController
   ) {}
 
   ngOnInit() {}
@@ -51,8 +54,15 @@ export class ClassComponent implements OnInit {
     });
   }
 
-  addResource() {
-    console.log("resource");
+  async addResource() {
+    const modal = await this.modalController.create({
+      component: ResourceComponent,
+      componentProps: {
+        modalCtrl: this.modalController,
+        class_id: this.class.id,
+      },
+    });
+    return await modal.present();
   }
 
   addActivity() {
