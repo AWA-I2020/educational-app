@@ -13,7 +13,7 @@
     <ion-card-header>
       <ion-grid fixed>
         <ion-row class="ion-justify-content-center">
-          <ion-card-title>{{ resource.name }}</ion-card-title>
+          <ion-card-title><b>{{ resource.name }}</b></ion-card-title>
         </ion-row>
       </ion-grid>
     </ion-card-header>
@@ -41,12 +41,16 @@
           <ion-label> <b> Archivos: </b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label *ngFor="let file of resource.files">
-            <h5 button (click)="openFile(file.url)">
-              {{ file.name }}
-              <ion-icon slot="start" name="open"></ion-icon>
-            </h5>
-          </ion-label>
+          <ion-row>
+            <ion-button
+              *ngFor="let file of resource.files"
+              (click)="openFile(file.url)"
+              expand="block"
+              shape="round"
+            >
+              {{ file.name }} <ion-icon slot="end" name="open"></ion-icon>
+            </ion-button>
+          </ion-row>
         </ion-item>
       </ion-list>
     </ion-card-content>
