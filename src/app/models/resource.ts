@@ -1,4 +1,7 @@
 export interface Resource {
-    fileURL: string;
-    name: string;
+  filesURL: string[];
+  description: string;
+  name: string;
+  class_id: string;
+  id?: string;
 }
