@@ -43,26 +43,27 @@ export class ResourceService {
       );
   }
 
-  pushFileToStorage(
-    fileUpload: FileUpload,
-    className: string
-  ): Observable<number> {
-    const filePath = `resources/${className}/${fileUpload.file.name}`;
-    const storageRef = this.storage.ref(filePath);
-    const uploadTask = this.storage.upload(filePath, fileUpload.file);
-
-    uploadTask
-      .snapshotChanges()
-      .pipe(
-        finalize(() => {
-          storageRef.getDownloadURL().subscribe((downloadURL) => {
-            fileUpload.url = downloadURL;
-            fileUpload.name = fileUpload.file.name;
-          });
-        })
-      )
-      .subscribe();
-
-    return uploadTask.percentageChanges();
+  uploadFiles(files: FileUpload[]): Promise<FileUpload[]> {
+    return new Promise((resolve, reject) => {
+      const data: FileUpload[] = [];
+      for (let file of files) {
+        const filePath = `resources/${file.file.name}`;
+        const ref = this.storage.ref(filePath);
+        const task = this.storage.upload(filePath, file.file);
+        task
+          .snapshotChanges()
+          .pipe(
+            finalize(() => {
+              ref.getDownloadURL().subscribe((url) => {
+                data.push({ name: file.file.name, url: url });
+                if (files.length === data.length) {
+                  resolve(data);
+                }
+              });
+            })
+          )
+          .subscribe();
+      }
+    });
   }
 }

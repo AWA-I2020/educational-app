@@ -9,7 +9,7 @@ import { ActivityService } from "src/app/services/activity/activity.service";
 import { Resource } from "src/app/models/resource";
 import { Activity } from "src/app/models/activity";
 import { ClassStudent } from "src/app/models/class-student";
-import { ModalController } from "@ionic/angular";
+import { ModalController, LoadingController, ToastController } from "@ionic/angular";
 import { ResourceComponent } from "../resource/resource.component";
 
 @Component({
@@ -32,7 +32,9 @@ export class ClassComponent implements OnInit {
     private classService: ClassService,
     private resourceService: ResourceService,
     private activityService: ActivityService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private loadingController: LoadingController,
+    private toastController: ToastController
   ) {}
 
   ngOnInit() {}
@@ -60,6 +62,8 @@ export class ClassComponent implements OnInit {
       componentProps: {
         modalCtrl: this.modalController,
         class_id: this.class.id,
+        loadingController: this.loadingController,
+        toastController: this.toastController
       },
     });
     return await modal.present();

@@ -50,6 +50,7 @@
                 <ion-label>
                   <h6 *ngFor="let file of files">
                     {{ file.file.name }}
+                    <ion-icon slot="start" name="trash"(click)="deleteFile(file)"></ion-icon>
                   </h6>
                 </ion-label>
               </ion-row>

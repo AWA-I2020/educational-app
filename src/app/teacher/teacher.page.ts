@@ -8,7 +8,6 @@ import { ModalAddResourceComponent } from "./modals/modal-add-resource/modal-add
 import { ModalAddClassComponent } from "./modals/modal-add-class/modal-add-class.component";
 import { ModalAddActivityHomeComponent } from "./modals/modal-add-activity-home/modal-add-activity-home.component";
 import { ModalAddActivityQuestionComponent } from "./modals/modal-add-activity-question/modal-add-activity-question.component";
-import { Modal } from "./modals/modal";
 import { Class } from "../models/class";
 import { TeacherService } from "../services/teacher/teacher.service";
 import { NgxIndexedDBService } from "ngx-indexed-db";
@@ -72,7 +71,7 @@ export class TeacherPage implements OnInit {
       componentProps: {
         modalCtrl: this.modalController,
         toastController: this.toastController,
-        indexedDbService: this.indexedDbService,
+        indexedDbService: this.indexedDbService
       },
     });
     return await modal.present();
