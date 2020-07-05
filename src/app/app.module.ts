@@ -20,6 +20,7 @@ import { NgxIndexedDBModule, DBConfig } from "ngx-indexed-db";
 import { ClassComponent } from "./shared/class/class.component";
 import { TeacherPageModule } from "./teacher/teacher.module";
 import { ResourceComponent } from "./shared/resource/resource.component";
+import { ResourceViewComponent } from "./shared/resource-view/resource-view.component";
 
 const dbConfig: DBConfig = {
   name: "EducationalDb",
@@ -54,8 +55,9 @@ const dbConfig: DBConfig = {
     SignUpComponent,
     ClassComponent,
     ResourceComponent,
+    ResourceViewComponent,
   ],
-  entryComponents: [ResourceComponent],
+  entryComponents: [ResourceComponent, ResourceViewComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),

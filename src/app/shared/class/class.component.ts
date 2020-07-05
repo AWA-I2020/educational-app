@@ -11,6 +11,7 @@ import { Activity } from "src/app/models/activity";
 import { ClassStudent } from "src/app/models/class-student";
 import { ModalController, LoadingController, ToastController } from "@ionic/angular";
 import { ResourceComponent } from "../resource/resource.component";
+import { ResourceViewComponent } from '../resource-view/resource-view.component';
 
 @Component({
   selector: "app-class",
@@ -73,8 +74,15 @@ export class ClassComponent implements OnInit {
     console.log("activity");
   }
 
-  openResource(resource: Resource) {
-    console.log("resource");
+  async openResource(resource: Resource) {
+    const modal = await this.modalController.create({
+      component: ResourceViewComponent,
+      componentProps: {
+        modalCtrl: this.modalController,
+        resource: resource
+      },
+    });
+    return await modal.present();
   }
 
   openActivity(activity: Activity) {

@@ -4,7 +4,6 @@ import {
   ModalController,
   ToastController,
 } from "@ionic/angular";
-import { ModalAddResourceComponent } from "./modals/modal-add-resource/modal-add-resource.component";
 import { ModalAddClassComponent } from "./modals/modal-add-class/modal-add-class.component";
 import { ModalAddActivityHomeComponent } from "./modals/modal-add-activity-home/modal-add-activity-home.component";
 import { ModalAddActivityQuestionComponent } from "./modals/modal-add-activity-question/modal-add-activity-question.component";
@@ -31,7 +30,6 @@ export class TeacherPage implements OnInit {
   backTitle = this.pageTitle;
 
   modalClass;
-  modalResource;
   modalHome;
   modalQuestion;
   classes: Class[] = [];
@@ -44,7 +42,6 @@ export class TeacherPage implements OnInit {
     private router: Router
   ) {
     this.modalClass = ModalAddClassComponent;
-    this.modalResource = ModalAddResourceComponent;
     this.modalHome = ModalAddActivityHomeComponent;
     this.modalQuestion = ModalAddActivityQuestionComponent;
   }
