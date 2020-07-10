@@ -25,8 +25,9 @@ export class ClassService {
     let classDoc = this.afs.doc<Class>(`classes/${id}`);
     return classDoc.valueChanges().pipe(
       take(1),
-      map((collection) => {
-        return collection;
+      map((data) => {
+        data.id = id;
+        return data;
       })
     );
   }

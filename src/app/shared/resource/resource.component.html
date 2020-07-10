@@ -1,0 +1,96 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Recurso</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-grid fixed>
+        <ion-row class="ion-justify-content-center">
+          <ion-card-title>Añadir recurso</ion-card-title>
+        </ion-row>
+      </ion-grid>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <form [formGroup]="resourceForm" (ngSubmit)="onSubmit()">
+          <ion-item>
+            <ion-label position="floating"
+              >Nombre <ion-text color="danger">*</ion-text></ion-label
+            >
+            <ion-input required formControlName="name" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating"
+              >Descripción <ion-text color="danger">*</ion-text></ion-label
+            >
+            <ion-textarea
+              required
+              formControlName="description"
+              type="text"
+            ></ion-textarea>
+          </ion-item>
+          <ion-item>
+            <ion-grid fixed>
+              <ion-row>
+                <ion-label
+                  >Documentos o archivos<ion-text color="danger"
+                    >*</ion-text
+                  ></ion-label
+                >
+              </ion-row>
+              <br />
+              <ion-row>
+                <ion-label>
+                  <h6 *ngFor="let file of files">
+                    {{ file.file.name }}
+                    <ion-icon slot="start" name="trash"(click)="deleteFile(file)"></ion-icon>
+                  </h6>
+                </ion-label>
+              </ion-row>
+              <br />
+              <ion-row class="ion-justify-content-center">
+                <ion-button expand="block" (click)="chosenFile.click()">
+                  <ion-icon
+                    lazy="true"
+                    slot="start"
+                    name="folder-outline"
+                  ></ion-icon>
+                  <ion-label slot="end">Escoger archivo</ion-label>
+                  <input
+                    style="display: none;"
+                    type="file"
+                    (change)="selectFile($event)"
+                    id="file-input"
+                    accept=".pdf, .doc, .docx, .txt, audio/*, video/*"
+                    #chosenFile
+                  />
+                </ion-button>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+
+          <br />
+          <ion-grid fixed>
+            <ion-row class="ion-justify-content-center">
+              <ion-fab-button
+                color="primary"
+                type="submit"
+                (click)="onSubmit()"
+                [disabled]="resourceForm.invalid"
+              >
+                <ion-icon name="checkmark"></ion-icon>
+              </ion-fab-button>
+            </ion-row>
+          </ion-grid>
+        </form>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

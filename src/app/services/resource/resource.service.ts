@@ -8,7 +8,7 @@ import { Resource } from "src/app/models/resource";
 import { Observable } from "rxjs";
 import { AngularFireStorage } from "@angular/fire/storage";
 import { FileUpload } from "src/app/models/file";
-import { finalize } from "rxjs/operators";
+import { finalize, map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
@@ -31,32 +31,39 @@ export class ResourceService {
       .collection<Resource>("resources", (ref) =>
         ref.where("class_id", "==", id)
       )
-      .valueChanges();
-  }
-
-  pushFileToStorage(
-    fileUpload: FileUpload,
-    className: string,
-    data: Resource
-  ): Observable<number> {
-    const filePath = `resources/${className}/${fileUpload.file.name}`;
-    const storageRef = this.storage.ref(filePath);
-    const uploadTask = this.storage.upload(filePath, fileUpload.file);
-
-    uploadTask
       .snapshotChanges()
       .pipe(
-        finalize(() => {
-          storageRef.getDownloadURL().subscribe((downloadURL) => {
-            fileUpload.url = downloadURL;
-            fileUpload.name = fileUpload.file.name;
-            data.fileURL = downloadURL;
-            this.addResource(data);
+        map((actions) => {
+          return actions.map((a) => {
+            const data = a.payload.doc.data();
+            const id = a.payload.doc.id;
+            return { id, ...data };
           });
         })
-      )
-      .subscribe();
+      );
+  }
 
-    return uploadTask.percentageChanges();
+  uploadFiles(files: FileUpload[]): Promise<FileUpload[]> {
+    return new Promise((resolve, reject) => {
+      const data: FileUpload[] = [];
+      for (let file of files) {
+        const filePath = `resources/${file.file.name}`;
+        const ref = this.storage.ref(filePath);
+        const task = this.storage.upload(filePath, file.file);
+        task
+          .snapshotChanges()
+          .pipe(
+            finalize(() => {
+              ref.getDownloadURL().subscribe((url) => {
+                data.push({ name: file.file.name, url: url });
+                if (files.length === data.length) {
+                  resolve(data);
+                }
+              });
+            })
+          )
+          .subscribe();
+      }
+    });
   }
 }
