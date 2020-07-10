@@ -12,6 +12,8 @@ import { ClassStudent } from "src/app/models/class-student";
 import { ModalController, LoadingController, ToastController } from "@ionic/angular";
 import { ResourceComponent } from "../resource/resource.component";
 import { ResourceViewComponent } from '../resource-view/resource-view.component';
+import { ModalAddActivityHomeComponent } from 'src/app/teacher/modals/modal-add-activity-home/modal-add-activity-home.component';
+import { ModalAddActivityQuestionComponent } from 'src/app/teacher/modals/modal-add-activity-question/modal-add-activity-question.component';
 
 @Component({
   selector: "app-class",
@@ -36,9 +38,9 @@ export class ClassComponent implements OnInit {
     private modalController: ModalController,
     private loadingController: LoadingController,
     private toastController: ToastController
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ionViewWillEnter() {
     this.indexedDb.getAll("user").then((data) => {
@@ -70,8 +72,30 @@ export class ClassComponent implements OnInit {
     return await modal.present();
   }
 
-  addActivity() {
-    console.log("activity");
+  async addActivityHome() {
+    const modal = await this.modalController.create({
+      component: ModalAddActivityHomeComponent,
+      componentProps: {
+        modalCtrl: this.modalController,
+        class_id: this.class.id,
+        loadingController: this.loadingController,
+        toastController: this.toastController
+      },
+    });
+    return await modal.present();
+  }
+
+  async addActivityQuestion() {
+    const modal = await this.modalController.create({
+      component: ModalAddActivityQuestionComponent,
+      componentProps: {
+        modalCtrl: this.modalController,
+        class_id: this.class.id,
+        loadingController: this.loadingController,
+        toastController: this.toastController
+      },
+    });
+    return await modal.present();
   }
 
   async openResource(resource: Resource) {
