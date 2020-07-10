@@ -12,7 +12,6 @@ import { TeacherService } from "../services/teacher/teacher.service";
 import { NgxIndexedDBService } from "ngx-indexed-db";
 import { User } from "../models/user";
 import { Router } from "@angular/router";
-import { userInfo } from 'os';
 
 @Component({
   selector: "app-teacher",
