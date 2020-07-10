@@ -21,6 +21,7 @@ import { ClassComponent } from "./shared/class/class.component";
 import { TeacherPageModule } from "./teacher/teacher.module";
 import { ResourceComponent } from "./shared/resource/resource.component";
 import { ResourceViewComponent } from "./shared/resource-view/resource-view.component";
+import { HttpClientModule } from '@angular/common/http';
 
 const dbConfig: DBConfig = {
   name: "EducationalDb",
@@ -65,6 +66,7 @@ const dbConfig: DBConfig = {
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AngularFireStorageModule,
+    HttpClientModule,
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production,
     }),
