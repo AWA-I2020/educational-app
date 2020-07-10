@@ -12,6 +12,7 @@ import { TeacherService } from "../services/teacher/teacher.service";
 import { NgxIndexedDBService } from "ngx-indexed-db";
 import { User } from "../models/user";
 import { Router } from "@angular/router";
+import { userInfo } from 'os';
 
 @Component({
   selector: "app-teacher",
@@ -19,6 +20,7 @@ import { Router } from "@angular/router";
   styleUrls: ["./teacher.page.scss"],
 })
 export class TeacherPage implements OnInit {
+  user: User;
   page: number = 1;
   pageTitle: string = "Mis clases";
   especificClass = {
@@ -26,9 +28,6 @@ export class TeacherPage implements OnInit {
     content: "",
     paralelo: "",
   };
-  backPage = 1;
-  backTitle = this.pageTitle;
-
   modalClass;
   modalHome;
   modalQuestion;
@@ -46,12 +45,13 @@ export class TeacherPage implements OnInit {
     this.modalQuestion = ModalAddActivityQuestionComponent;
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ionViewWillEnter() {
     this.indexedDbService.getAll("user").then((data) => {
+      this.user = (data[0] as unknown) as User;
       this.teacherService
-        .getClasses(((data[0] as unknown) as User).id)
+        .getClasses((this.user.id))
         .subscribe((classesData) => {
           this.classes = classesData;
         });
@@ -60,6 +60,10 @@ export class TeacherPage implements OnInit {
 
   openClass(id: string) {
     this.router.navigate(["/teacher/class", { id: id }]);
+  }
+
+  profile() {
+    this.router.navigate(['/teacher/profile']);
   }
 
   async openModal(modalComponent) {
@@ -87,16 +91,9 @@ export class TeacherPage implements OnInit {
   }
 
   private changePage(valuePage, pageName, especificclass?) {
-    this.backPage = this.page;
-    this.backTitle = this.pageTitle;
     this.page = valuePage;
     this.pageTitle = pageName;
     this.especificClass = especificclass;
     this.menu.close();
-  }
-
-  private back() {
-    this.page = this.backPage;
-    this.pageTitle = this.backTitle;
   }
 }
