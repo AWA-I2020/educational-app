@@ -30,18 +30,13 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>{{pageTitle}}</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="back()" *ngIf="page != 1 disabled">
-        <ion-icon name="arrow-back"></ion-icon>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <!-- perfil -->
   <ng-template [ngIf]="page == 0">
-    <!-- here the perfil selector component -->
+    <app-profile [user]='user'></app-profile>
   </ng-template>
   <!-- end perfil -->
 
