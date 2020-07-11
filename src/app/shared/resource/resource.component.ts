@@ -85,10 +85,5 @@ export class ResourceComponent extends Modal {
   get file(): AbstractControl {
     return this.resourceForm.get("file");
   }
-
-  dismiss() {
-    this.modalCtrl.dismiss({
-      dismissed: true,
-    });
-  }
+ 
 }
