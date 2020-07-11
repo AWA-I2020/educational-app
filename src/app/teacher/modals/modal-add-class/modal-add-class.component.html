@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color=primary>
     <ion-buttons slot="start">
       <ion-button (click)="dismiss()">
         <ion-icon name="arrow-back"></ion-icon>
@@ -11,6 +11,13 @@
 
 <ion-content>
   <ion-card>
+    <ion-card-header>
+      <ion-grid fixed>
+        <ion-row class="ion-justify-content-center">
+          <ion-card-title>Agregar Clase</ion-card-title>
+        </ion-row>
+      </ion-grid>
+    </ion-card-header>
     <ion-card-content>
       <ion-list>
         <form [formGroup]="classForm" (ngSubmit)="onSubmit()">
