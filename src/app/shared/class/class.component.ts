@@ -103,7 +103,8 @@ export class ClassComponent implements OnInit {
       component: ResourceViewComponent,
       componentProps: {
         modalCtrl: this.modalController,
-        resource: resource
+        resource: resource,
+        loadingController: this.loadingController
       },
     });
     return await modal.present();
