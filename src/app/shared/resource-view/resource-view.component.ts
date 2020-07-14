@@ -40,9 +40,4 @@ export class ResourceViewComponent extends Modal {
     }
   }
 
-  dismiss() {
-    this.modalCtrl.dismiss({
-      dismissed: true,
-    });
-  }
 }

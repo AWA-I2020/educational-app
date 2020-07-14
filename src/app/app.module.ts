@@ -49,7 +49,11 @@ const dbConfig: DBConfig = {
 };
 
 @NgModule({
-  exports: [SignInComponent, SignUpComponent, ClassComponent],
+  exports: [
+    SignInComponent,
+    SignUpComponent,
+    ClassComponent,
+  ],
   declarations: [
     AppComponent,
     SignInComponent,
@@ -58,7 +62,7 @@ const dbConfig: DBConfig = {
     ResourceComponent,
     ResourceViewComponent,
   ],
-  entryComponents: [ResourceComponent, ResourceViewComponent],
+  entryComponents: [ResourceComponent, ResourceViewComponent,],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
@@ -82,4 +86,4 @@ const dbConfig: DBConfig = {
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

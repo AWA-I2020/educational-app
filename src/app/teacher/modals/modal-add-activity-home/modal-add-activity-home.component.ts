@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Modal } from '../modal';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-modal-add-activity-home',
@@ -9,6 +10,11 @@ import { Modal } from '../modal';
 export class ModalAddActivityHomeComponent extends Modal {
 
   formats;
+  resourceForm = new FormGroup({
+    name: new FormControl("", Validators.required),
+    description: new FormControl("", Validators.required),
+    format: new FormControl("", Validators.required),
+  });
   constructor() {
     super();
   }

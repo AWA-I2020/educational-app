@@ -5,8 +5,6 @@ import {
   ToastController,
 } from "@ionic/angular";
 import { ModalAddClassComponent } from "./modals/modal-add-class/modal-add-class.component";
-import { ModalAddActivityHomeComponent } from "./modals/modal-add-activity-home/modal-add-activity-home.component";
-import { ModalAddActivityQuestionComponent } from "./modals/modal-add-activity-question/modal-add-activity-question.component";
 import { Class } from "../models/class";
 import { TeacherService } from "../services/teacher/teacher.service";
 import { NgxIndexedDBService } from "ngx-indexed-db";
@@ -19,19 +17,10 @@ import { Router } from "@angular/router";
   styleUrls: ["./teacher.page.scss"],
 })
 export class TeacherPage implements OnInit {
+  user: User;
   page: number = 1;
   pageTitle: string = "Mis clases";
-  especificClass = {
-    title: "",
-    content: "",
-    paralelo: "",
-  };
-  backPage = 1;
-  backTitle = this.pageTitle;
-
   modalClass;
-  modalHome;
-  modalQuestion;
   classes: Class[] = [];
   constructor(
     private menu: MenuController,
@@ -40,18 +29,15 @@ export class TeacherPage implements OnInit {
     private indexedDbService: NgxIndexedDBService,
     private toastController: ToastController,
     private router: Router
-  ) {
-    this.modalClass = ModalAddClassComponent;
-    this.modalHome = ModalAddActivityHomeComponent;
-    this.modalQuestion = ModalAddActivityQuestionComponent;
-  }
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ionViewWillEnter() {
     this.indexedDbService.getAll("user").then((data) => {
+      this.user = (data[0] as unknown) as User;
       this.teacherService
-        .getClasses(((data[0] as unknown) as User).id)
+        .getClasses((this.user.id))
         .subscribe((classesData) => {
           this.classes = classesData;
         });
@@ -62,9 +48,13 @@ export class TeacherPage implements OnInit {
     this.router.navigate(["/teacher/class", { id: id }]);
   }
 
-  async openModal(modalComponent) {
+  profile() {
+    this.router.navigate(['/teacher/profile']);
+  }
+
+  async openModal() {
     const modal = await this.modalController.create({
-      component: modalComponent,
+      component: ModalAddClassComponent,
       componentProps: {
         modalCtrl: this.modalController,
         toastController: this.toastController,
@@ -86,17 +76,9 @@ export class TeacherPage implements OnInit {
     this.menu.open("first");
   }
 
-  private changePage(valuePage, pageName, especificclass?) {
-    this.backPage = this.page;
-    this.backTitle = this.pageTitle;
+  private changePage(valuePage, pageName) {
     this.page = valuePage;
     this.pageTitle = pageName;
-    this.especificClass = especificclass;
     this.menu.close();
-  }
-
-  private back() {
-    this.page = this.backPage;
-    this.pageTitle = this.backTitle;
   }
 }

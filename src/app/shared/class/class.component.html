@@ -9,10 +9,8 @@
 <ion-content>
   <ion-card *ngIf="class && user">
     <ion-card-header>
-      <ion-card-subtitle
-        >Curso: {{ class.grade }} de Primaria - Paralelo:
-        {{ class.parallel }}</ion-card-subtitle
-      >
+      <ion-card-subtitle>Curso: {{ class.grade }} de Primaria - Paralelo:
+        {{ class.parallel }}</ion-card-subtitle>
       <ion-card-title>{{ class.subject }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
@@ -22,11 +20,7 @@
             <ion-list-header>
               Recursos
             </ion-list-header>
-            <ion-item
-              button
-              *ngFor="let resource of resources"
-              (click)="openResource(resource)"
-            >
+            <ion-item button *ngFor="let resource of resources" (click)="openResource(resource)">
               <ion-label>{{ resource.name }}</ion-label>
             </ion-item>
           </ion-list>
@@ -41,12 +35,7 @@
             </ion-list>
           </ng-template>
           <br />
-          <ion-fab
-            vertical="top"
-            horizontal="end"
-            slot="fixed"
-            *ngIf="user.role == 'Profesor'"
-          >
+          <ion-fab vertical="top" horizontal="end" slot="fixed" *ngIf="user.role == 'Profesor'">
             <ion-fab-button (click)="addResource()">
               <ion-icon name="add"></ion-icon>
             </ion-fab-button>
@@ -57,11 +46,7 @@
             <ion-list-header>
               Actividades
             </ion-list-header>
-            <ion-item
-              button
-              *ngFor="let activity of activities"
-              (click)="openActivity(activity)"
-            >
+            <ion-item button *ngFor="let activity of activities" (click)="openActivity(activity)">
               <ion-label>{{ activity.name }}</ion-label>
             </ion-item>
           </ion-list>
@@ -76,15 +61,18 @@
             </ion-list>
           </ng-template>
           <br />
-          <ion-fab
-            vertical="top"
-            horizontal="end"
-            slot="fixed"
-            *ngIf="user.role == 'Profesor'"
-          >
-            <ion-fab-button (click)="addActivity()">
-              <ion-icon name="add"></ion-icon>
+          <ion-fab vertical="top" horizontal="end" slot="fixed" *ngIf="user.role == 'Profesor'">
+            <ion-fab-button>
+              <ion-icon name="Add"></ion-icon>
             </ion-fab-button>
+            <ion-fab-list side="start">
+              <ion-fab-button (click)=addActivityQuestion()>
+                <ion-icon name="clipboard"></ion-icon>
+              </ion-fab-button>
+              <ion-fab-button (click)=addActivityHome()>
+                <ion-icon name="home"></ion-icon>
+              </ion-fab-button>
+            </ion-fab-list>
           </ion-fab>
         </ion-slide>
         <ion-slide *ngIf="user.role == 'Profesor'">
@@ -92,11 +80,7 @@
             <ion-list-header>
               Estudiantes
             </ion-list-header>
-            <ion-item
-              button
-              *ngFor="let student of students"
-              (click)="openStudent(student)"
-            >
+            <ion-item button *ngFor="let student of students" (click)="openStudent(student)">
               <ion-label>Awesome Label</ion-label>
             </ion-item>
           </ion-list>
