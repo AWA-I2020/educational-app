@@ -10,7 +10,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class ModalAddActivityHomeComponent extends Modal {
 
   formats;
-  resourceForm = new FormGroup({
+  homeWorkForm = new FormGroup({
     name: new FormControl("", Validators.required),
     description: new FormControl("", Validators.required),
     format: new FormControl("", Validators.required),
