@@ -16,9 +16,11 @@ import { User } from "src/app/models/user";
   styleUrls: ["./modal-add-class.component.scss"],
 })
 export class ModalAddClassComponent extends Modal {
+
   materias = ["Matematicas", "Lenguaje", "Historia"];
   cursos = [1, 2, 3, 4, 5, 6];
   paralelos = ["A", "B", "C", "D"];
+  
   classForm = new FormGroup({
     subject: new FormControl("", Validators.required),
     grade: new FormControl("", Validators.required),
