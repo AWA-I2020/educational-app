@@ -76,7 +76,7 @@ export class TeacherPage implements OnInit {
     this.menu.open("first");
   }
 
-  private changePage(valuePage, pageName) {
+  changePage(valuePage, pageName) {
     this.page = valuePage;
     this.pageTitle = pageName;
     this.menu.close();

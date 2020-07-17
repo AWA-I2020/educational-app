@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Class } from "src/app/models/class";
 import { ClassService } from "src/app/services/class/class.service";
-import { User } from "firebase";
 import { NgxIndexedDBService } from "ngx-indexed-db";
 import { ResourceService } from "src/app/services/resource/resource.service";
 import { ActivityService } from "src/app/services/activity/activity.service";
@@ -14,6 +13,7 @@ import { ResourceComponent } from "../resource/resource.component";
 import { ResourceViewComponent } from '../resource-view/resource-view.component';
 import { ModalAddActivityHomeComponent } from 'src/app/teacher/modals/modal-add-activity-home/modal-add-activity-home.component';
 import { ModalAddActivityQuestionComponent } from 'src/app/teacher/modals/modal-add-activity-question/modal-add-activity-question.component';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: "app-class",

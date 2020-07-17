@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { Modal } from '../modal';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit } from "@angular/core";
+import { Modal } from "../modal";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 
 @Component({
-  selector: 'app-modal-add-activity-home',
-  templateUrl: './modal-add-activity-home.component.html',
-  styleUrls: ['./modal-add-activity-home.component.scss'],
+  selector: "app-modal-add-activity-home",
+  templateUrl: "./modal-add-activity-home.component.html",
+  styleUrls: ["./modal-add-activity-home.component.scss"],
 })
 export class ModalAddActivityHomeComponent extends Modal {
-
   formats;
   homeWorkForm = new FormGroup({
     name: new FormControl("", Validators.required),
@@ -20,7 +19,8 @@ export class ModalAddActivityHomeComponent extends Modal {
   }
 
   ngOnInit() {
-    this.formats = ['PDF','DOC',];
+    this.formats = ["PDF", "DOC"];
   }
 
+  onSubmit() {}
 }
