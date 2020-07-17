@@ -21,7 +21,7 @@ import { ClassComponent } from "./shared/class/class.component";
 import { TeacherPageModule } from "./teacher/teacher.module";
 import { ResourceComponent } from "./shared/resource/resource.component";
 import { ResourceViewComponent } from "./shared/resource-view/resource-view.component";
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from "@angular/common/http";
 
 const dbConfig: DBConfig = {
   name: "EducationalDb",
@@ -45,15 +45,18 @@ const dbConfig: DBConfig = {
         { name: "id", keypath: "id", options: { unique: false } },
       ],
     },
+    {
+      storeConfig: { keyPath: "id", autoIncrement: true },
+      store: "resources",
+      storeSchema: [
+        { name: "files", keypath: "files", options: { unique: false } },
+      ],
+    },
   ],
 };
 
 @NgModule({
-  exports: [
-    SignInComponent,
-    SignUpComponent,
-    ClassComponent,
-  ],
+  exports: [SignInComponent, SignUpComponent, ClassComponent],
   declarations: [
     AppComponent,
     SignInComponent,
@@ -62,7 +65,7 @@ const dbConfig: DBConfig = {
     ResourceComponent,
     ResourceViewComponent,
   ],
-  entryComponents: [ResourceComponent, ResourceViewComponent,],
+  entryComponents: [ResourceComponent, ResourceViewComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
@@ -87,4 +90,4 @@ const dbConfig: DBConfig = {
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
