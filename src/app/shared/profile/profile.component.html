@@ -8,7 +8,7 @@
     <ion-item>
       <h2>Nombre Completo: {{ user.completeName }}</h2>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="user.email">
       <h2>Correo electronico: {{ user.email }}</h2>
     </ion-item>
     <ion-item *ngIf="user.role == 'Estudiante'">

@@ -22,4 +22,6 @@ export class ModalAddActivityQuestionComponent extends Modal {
 
   ngOnInit() { }
 
+  onSubmit() {}
+
 }

@@ -2,18 +2,22 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Class } from "src/app/models/class";
 import { ClassService } from "src/app/services/class/class.service";
-import { User } from "firebase";
 import { NgxIndexedDBService } from "ngx-indexed-db";
 import { ResourceService } from "src/app/services/resource/resource.service";
 import { ActivityService } from "src/app/services/activity/activity.service";
 import { Resource } from "src/app/models/resource";
 import { Activity } from "src/app/models/activity";
 import { ClassStudent } from "src/app/models/class-student";
-import { ModalController, LoadingController, ToastController } from "@ionic/angular";
+import {
+  ModalController,
+  LoadingController,
+  ToastController,
+} from "@ionic/angular";
 import { ResourceComponent } from "../resource/resource.component";
-import { ResourceViewComponent } from '../resource-view/resource-view.component';
-import { ModalAddActivityHomeComponent } from 'src/app/teacher/modals/modal-add-activity-home/modal-add-activity-home.component';
-import { ModalAddActivityQuestionComponent } from 'src/app/teacher/modals/modal-add-activity-question/modal-add-activity-question.component';
+import { ResourceViewComponent } from "../resource-view/resource-view.component";
+import { ModalAddActivityHomeComponent } from "src/app/teacher/modals/modal-add-activity-home/modal-add-activity-home.component";
+import { ModalAddActivityQuestionComponent } from "src/app/teacher/modals/modal-add-activity-question/modal-add-activity-question.component";
+import { User } from "src/app/models/user";
 
 @Component({
   selector: "app-class",
@@ -38,9 +42,9 @@ export class ClassComponent implements OnInit {
     private modalController: ModalController,
     private loadingController: LoadingController,
     private toastController: ToastController
-  ) { }
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   ionViewWillEnter() {
     this.indexedDb.getAll("user").then((data) => {
@@ -66,7 +70,7 @@ export class ClassComponent implements OnInit {
         modalCtrl: this.modalController,
         class_id: this.class.id,
         loadingController: this.loadingController,
-        toastController: this.toastController
+        toastController: this.toastController,
       },
     });
     return await modal.present();
@@ -79,7 +83,7 @@ export class ClassComponent implements OnInit {
         modalCtrl: this.modalController,
         class_id: this.class.id,
         loadingController: this.loadingController,
-        toastController: this.toastController
+        toastController: this.toastController,
       },
     });
     return await modal.present();
@@ -92,7 +96,7 @@ export class ClassComponent implements OnInit {
         modalCtrl: this.modalController,
         class_id: this.class.id,
         loadingController: this.loadingController,
-        toastController: this.toastController
+        toastController: this.toastController,
       },
     });
     return await modal.present();
@@ -104,7 +108,7 @@ export class ClassComponent implements OnInit {
       componentProps: {
         modalCtrl: this.modalController,
         resource: resource,
-        loadingController: this.loadingController
+        loadingController: this.loadingController,
       },
     });
     return await modal.present();
