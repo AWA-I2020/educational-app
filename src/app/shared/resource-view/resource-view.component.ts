@@ -33,6 +33,10 @@ export class ResourceViewComponent extends Modal {
               fileURL: file.url,
             });
           });
+          this.dbService.add("resources", {
+            id: this.resource.id,
+            files: this.files,
+          });
         }
       },
       (error) => {
@@ -54,7 +58,7 @@ export class ResourceViewComponent extends Modal {
           this.files[fileIndex].file = file;
           this.files[fileIndex].icon = "eye";
           this.dismissLoading();
-          this.dbService.add("resources", {
+          this.dbService.update("resources", {
             id: this.resource.id,
             files: this.files,
           });
