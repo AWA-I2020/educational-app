@@ -52,7 +52,7 @@
               Actividades
             </ion-list-header>
             <ion-item button *ngFor="let activity of activities" (click)="openActivity(activity)">
-              <ion-label>{{ activity.name }}</ion-label>
+              <ion-label>{{ activity.title }}</ion-label>
             </ion-item>
           </ion-list>
           <ng-template #noActivities>
