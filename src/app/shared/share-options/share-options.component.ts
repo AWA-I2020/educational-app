@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { PopoverController, ToastController } from "@ionic/angular";
+import { Plugins } from "@capacitor/core";
 
 @Component({
   selector: "app-share-options",
@@ -16,15 +17,18 @@ export class ShareOptionsComponent implements OnInit {
 
   ngOnInit() {}
 
-  copyCode() {
-    document.addEventListener("copy", (e: ClipboardEvent) => {
-      e.clipboardData.setData("text/plain", this.code);
-      e.preventDefault();
-      document.removeEventListener("copy", null);
-    });
-    document.execCommand("copy");
-    this.closePopover();
-    this.presentToast("Codigo copiado al portapapeles");
+  async copyCode() {
+    const { Clipboard } = Plugins;
+    Clipboard.write({
+      string: this.code,
+    })
+      .then(() => {
+        this.closePopover();
+        this.presentToast("Codigo copiado al portapapeles");
+      })
+      .catch(() => {
+        this.presentToast("Por favor copie manualmente el codigo");
+      });
   }
 
   async presentToast(message: string) {

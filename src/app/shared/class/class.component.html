@@ -4,7 +4,7 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="end" *ngIf="user">
-      <ion-button (click)="shareClass()" *ngIf="user.role == 'Profesor'">
+      <ion-button (click)="shareClass($event)" *ngIf="user.role == 'Profesor'">
         <ion-icon name="share"></ion-icon>
       </ion-button>
     </ion-buttons>

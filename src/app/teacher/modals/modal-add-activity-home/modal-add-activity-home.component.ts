@@ -8,7 +8,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
   styleUrls: ["./modal-add-activity-home.component.scss"],
 })
 export class ModalAddActivityHomeComponent extends Modal {
-  formats;
+  formats: string[] = ["PDF", "WORD"];
   homeWorkForm = new FormGroup({
     name: new FormControl("", Validators.required),
     description: new FormControl("", Validators.required),
@@ -18,9 +18,7 @@ export class ModalAddActivityHomeComponent extends Modal {
     super();
   }
 
-  ngOnInit() {
-    this.formats = ["PDF", "DOC"];
-  }
+  ngOnInit() {}
 
   onSubmit() {}
 }
