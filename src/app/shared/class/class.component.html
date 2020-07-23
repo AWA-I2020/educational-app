@@ -3,6 +3,11 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end" *ngIf="user">
+      <ion-button (click)="shareClass()" *ngIf="user.role == 'Profesor'">
+        <ion-icon name="share"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>Clase</ion-title>
   </ion-toolbar>
 </ion-header>
