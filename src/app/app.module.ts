@@ -22,6 +22,7 @@ import { TeacherPageModule } from "./teacher/teacher.module";
 import { ResourceComponent } from "./shared/resource/resource.component";
 import { ResourceViewComponent } from "./shared/resource-view/resource-view.component";
 import { HttpClientModule } from "@angular/common/http";
+import { ShareOptionsComponent } from "./shared/share-options/share-options.component";
 
 const dbConfig: DBConfig = {
   name: "EducationalDb",
@@ -64,8 +65,13 @@ const dbConfig: DBConfig = {
     ClassComponent,
     ResourceComponent,
     ResourceViewComponent,
+    ShareOptionsComponent,
   ],
-  entryComponents: [ResourceComponent, ResourceViewComponent],
+  entryComponents: [
+    ResourceComponent,
+    ResourceViewComponent,
+    ShareOptionsComponent,
+  ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),

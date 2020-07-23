@@ -12,12 +12,14 @@ import {
   ModalController,
   LoadingController,
   ToastController,
+  PopoverController,
 } from "@ionic/angular";
 import { ResourceComponent } from "../resource/resource.component";
 import { ResourceViewComponent } from "../resource-view/resource-view.component";
 import { ModalAddActivityHomeComponent } from "src/app/teacher/modals/modal-add-activity-home/modal-add-activity-home.component";
 import { ModalAddActivityQuestionComponent } from "src/app/teacher/modals/modal-add-activity-question/modal-add-activity-question.component";
 import { User } from "src/app/models/user";
+import { ShareOptionsComponent } from '../share-options/share-options.component';
 
 @Component({
   selector: "app-class",
@@ -41,7 +43,8 @@ export class ClassComponent implements OnInit {
     private activityService: ActivityService,
     private modalController: ModalController,
     private loadingController: LoadingController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private popoverController: PopoverController
   ) {}
 
   ngOnInit() {}
@@ -121,4 +124,15 @@ export class ClassComponent implements OnInit {
   openStudent(student: ClassStudent) {
     console.log("student");
   }
+
+  async shareClass(ev) {
+    const popover = await this.popoverController.create({
+      component: ShareOptionsComponent,
+      componentProps: {code: this.class.id, class: true},
+      event: ev,
+      translucent: true,
+    });
+    return await popover.present();
+  }
+
 }
