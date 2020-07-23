@@ -21,6 +21,7 @@ export class ModalAddActivityHomeComponent extends Modal {
     title: new FormControl("", Validators.required),
     description: new FormControl("", Validators.required),
     format: new FormControl("", Validators.required),
+    deadline: new FormControl("", Validators.required),
   });
   constructor(private activityService: ActivityService) {
     super();
@@ -35,6 +36,7 @@ export class ModalAddActivityHomeComponent extends Modal {
       date: new Date(Date.now()),
       description: this.description.value,
       format: this.format.value,
+      deadline: new Date(this.deadline.value),
       title: this.title.value,
     };
     this.activityService.addActivity(activity).then(() => {
@@ -54,5 +56,9 @@ export class ModalAddActivityHomeComponent extends Modal {
 
   get format(): AbstractControl {
     return this.homeWorkForm.get("format");
+  }
+
+  get deadline(): AbstractControl {
+    return this.homeWorkForm.get("deadline");
   }
 }

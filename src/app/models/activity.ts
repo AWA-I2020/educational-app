@@ -4,5 +4,6 @@ export interface Activity {
   format: string;
   date: Date;
   class_id: string;
+  deadline: Date;
   id?: string;
 }
