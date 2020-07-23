@@ -23,6 +23,7 @@ import { ResourceComponent } from "./shared/resource/resource.component";
 import { ResourceViewComponent } from "./shared/resource-view/resource-view.component";
 import { HttpClientModule } from "@angular/common/http";
 import { ShareOptionsComponent } from "./shared/share-options/share-options.component";
+import { ActivityViewComponent } from "./shared/activity-view/activity-view.component";
 
 const dbConfig: DBConfig = {
   name: "EducationalDb",
@@ -65,11 +66,13 @@ const dbConfig: DBConfig = {
     ClassComponent,
     ResourceComponent,
     ResourceViewComponent,
+    ActivityViewComponent,
     ShareOptionsComponent,
   ],
   entryComponents: [
     ResourceComponent,
     ResourceViewComponent,
+    ActivityViewComponent,
     ShareOptionsComponent,
   ],
   imports: [
