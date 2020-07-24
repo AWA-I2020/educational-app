@@ -11,6 +11,8 @@ import { StudentActivity } from "src/app/models/student-activity";
 import { AngularFireStorage } from "@angular/fire/storage";
 import { FileUpload } from "src/app/models/file";
 import { finalize, take, map } from "rxjs/operators";
+import { User } from "src/app/models/user";
+import { ResourceFile } from "src/app/models/resource-file";
 
 @Injectable({
   providedIn: "root",
@@ -76,9 +78,9 @@ export class StudentService {
       );
   }
 
-  uploadActivity(file: FileUpload): Promise<FileUpload> {
+  uploadActivity(file: FileUpload): Promise<ResourceFile> {
     return new Promise((resolve, reject) => {
-      let data: FileUpload;
+      let data: ResourceFile;
       const filePath = `activities/${file.file.name}`;
       const ref = this.storage.ref(filePath);
       const task = this.storage.upload(filePath, file.file);
@@ -87,12 +89,23 @@ export class StudentService {
         .pipe(
           finalize(() => {
             ref.getDownloadURL().subscribe((url) => {
-              data = { name: file.file.name, url: url };
+              data = { name: file.file.name, fileURL: url, icon: "eye" };
               resolve(data);
             });
           })
         )
         .subscribe();
     });
+  }
+
+  getStudent(id: string): Observable<User> {
+    let userDoc = this.afs.doc<User>(`users/${id}`);
+    return userDoc.valueChanges().pipe(
+      take(1),
+      map((student) => {
+        student.id = id;
+        return student;
+      })
+    );
   }
 }
