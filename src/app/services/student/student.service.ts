@@ -89,7 +89,7 @@ export class StudentService {
         .pipe(
           finalize(() => {
             ref.getDownloadURL().subscribe((url) => {
-              data = { name: file.file.name, fileURL: url, icon: "eye" };
+              data = { name: file.file.name, fileURL: url, icon: "download" };
               resolve(data);
             });
           })
