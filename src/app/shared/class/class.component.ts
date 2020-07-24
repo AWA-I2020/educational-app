@@ -128,6 +128,7 @@ export class ClassComponent implements OnInit {
         user: this.user,
         loadingController: this.loadingController,
         toastController: this.toastController,
+        indexedDbService: this.indexedDb
       },
     });
     return await modal.present();
