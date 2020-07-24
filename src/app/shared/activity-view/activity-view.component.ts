@@ -84,6 +84,10 @@ export class ActivityViewComponent extends Modal {
       componentProps: {
         activityCode: this.activity.id,
         activityTitle: this.activity.title,
+        modalCtrl: this.modalCtrl,
+        loadingController: this.loadingController,
+        toastController: this.toastController,
+        indexedDbService: this.indexedDbService
       },
     });
     return await modal.present();
