@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { Modal } from "../modal";
 import {
   FormGroup,
@@ -16,7 +16,7 @@ import { Activity } from "src/app/models/activity";
 })
 export class ModalAddActivityHomeComponent extends Modal {
   @Input() class_id: string;
-  formats: string[] = ["PDF", "WORD"];
+  formats: string[] = ["PDF", "WORD", "TEXTO"];
   homeWorkForm = new FormGroup({
     title: new FormControl("", Validators.required),
     description: new FormControl("", Validators.required),

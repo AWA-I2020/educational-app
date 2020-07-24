@@ -18,6 +18,8 @@ export class ActivityViewComponent extends Modal {
   selectedFiles: FileList;
   file: FileUpload;
   activitySent: boolean = false;
+  textField: boolean = false;
+  textActivity: string = "";
   constructor(private studentService: StudentService) {
     super();
   }
@@ -28,7 +30,11 @@ export class ActivityViewComponent extends Modal {
     if (this.activity.format === "PDF") {
       this.format = ".pdf";
     } else {
-      this.format = ".doc, .docx";
+      if (this.activity.format === "WORD") {
+        this.format = ".doc, .docx";
+      } else {
+        this.textField = true;
+      }
     }
     this.studentService
       .getActivity(this.user.id, this.activity.id)
@@ -50,18 +56,27 @@ export class ActivityViewComponent extends Modal {
 
   async onSubmit() {
     this.loading("Entregando actividad");
-    let fileUpload: FileUpload = await this.studentService.uploadActivity(
-      this.file
-    );
     let studentActivity: StudentActivity = {
       activity_id: this.activity.id,
       student_id: this.user.id,
-      file: fileUpload,
     };
+    if (this.file) {
+      let fileUpload: FileUpload = await this.studentService.uploadActivity(
+        this.file
+      );
+      studentActivity.file = fileUpload;
+    } else {
+      studentActivity.textActivity = this.textActivity;
+    }
+
     this.studentService.addActivity(studentActivity).then(() => {
       this.dismissLoading();
       this.dismiss();
       this.presentToast("Actividad entregada");
     });
+  }
+
+  seeActivities() {
+    console.log("all activities")
   }
 }
