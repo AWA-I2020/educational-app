@@ -10,10 +10,10 @@
 </ion-header>
 <ion-content>
   <ion-card>
-    <ion-card-header>
-      <ion-card-title>{{ activityTitle }}</ion-card-title>
-    </ion-card-header>
     <ion-card-content>
+      <ion-list-header>
+        <ion-label>{{ activityTitle }}</ion-label>
+      </ion-list-header>
       <ion-list *ngIf="activities.length > 0; else noActivities">
         <ion-item *ngFor="let activity of activities">
           <ion-label>
@@ -25,10 +25,10 @@
               color="primary"
               mode="ios"
               outline="true"
-              (click)="downloadFile(activity.file.fileURL)"
+              (click)="downloadFile(activity.file.name)"
             >
               <ion-label>{{ activity.file.name }}</ion-label>
-              <ion-icon slot="end" [name]="activity.file.icon"></ion-icon>
+              <ion-icon [name]="activity.file.icon"></ion-icon>
             </ion-chip>
             <p *ngIf="activity.textActivity">
               {{ activity.textActivity }}
@@ -38,6 +38,9 @@
       </ion-list>
       <ng-template #noActivities>
         <ion-list>
+          <ion-list-header>
+            <ion-label>{{ activityTitle }}</ion-label>
+          </ion-list-header>
           <ion-list-header>
             <ion-label>No se entregaron actividades aun.</ion-label>
           </ion-list-header>
