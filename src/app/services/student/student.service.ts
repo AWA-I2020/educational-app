@@ -49,7 +49,7 @@ export class StudentService {
     return this.studentActivitiesCollection.add(data);
   }
 
-  getActivitiesOfStudent(id: string): Observable<StudentActivity[]> {
+  getActivitiesOfStudents(id: string): Observable<StudentActivity[]> {
     return this.afs
       .collection<StudentActivity>("students-activities", (ref) =>
         ref.where("activity_id", "==", id)
