@@ -24,7 +24,7 @@ import { ResourceViewComponent } from "./shared/resource-view/resource-view.comp
 import { HttpClientModule } from "@angular/common/http";
 import { ShareOptionsComponent } from "./shared/share-options/share-options.component";
 import { ActivityViewComponent } from "./shared/activity-view/activity-view.component";
-import { ActivitiesViewComponent } from './shared/activities-view/activities-view.component';
+import { ActivitiesViewComponent } from "./shared/activities-view/activities-view.component";
 
 const dbConfig: DBConfig = {
   name: "EducationalDb",
@@ -53,6 +53,17 @@ const dbConfig: DBConfig = {
       store: "resources",
       storeSchema: [
         { name: "files", keypath: "files", options: { unique: false } },
+      ],
+    },
+    {
+      storeConfig: { keyPath: "id", autoIncrement: true },
+      store: "activities",
+      storeSchema: [
+        {
+          name: "activities",
+          keypath: "activities",
+          options: { unique: false },
+        },
       ],
     },
   ],
