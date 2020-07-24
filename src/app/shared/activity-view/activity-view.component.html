@@ -49,14 +49,24 @@
         <ion-item>
           <h5>{{ activity.deadline.seconds * 1000 | date: "medium" }}</h5>
         </ion-item>
-        <ion-item *ngIf="user.role != 'Estudiante' && !activitySent">
+        <ion-item>
+          <ion-label>
+            <h5>
+              <b>Formato de archivo: </b>
+            </h5>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <h5>{{ activity.format }}</h5>
+        </ion-item>
+        <ion-item *ngIf="user.role == 'Estudiante' && !activitySent">
           <ion-label>
             <h5>
               <b>Archivo: </b>
             </h5>
           </ion-label>
         </ion-item>
-        <ion-grid fixed *ngIf="user.role != 'Estudiante' && !activitySent">
+        <ion-grid fixed *ngIf="user.role == 'Estudiante' && !activitySent">
           <ion-row *ngIf="file">
             <ion-chip color="primary" mode="ios" outline="true">
               <ion-label>
