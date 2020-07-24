@@ -5,6 +5,7 @@ import { User } from "src/app/models/user";
 import { Modal } from "src/app/teacher/modals/modal";
 import { StudentActivity } from "src/app/models/student-activity";
 import { StudentService } from "src/app/services/student/student.service";
+import { ActivitiesViewComponent } from "../activities-view/activities-view.component";
 
 @Component({
   selector: "app-activity-view",
@@ -76,7 +77,11 @@ export class ActivityViewComponent extends Modal {
     });
   }
 
-  seeActivities() {
-    console.log("all activities")
+  async seeActivities() {
+    const modal = await this.modalCtrl.create({
+      component: ActivitiesViewComponent,
+      componentProps: { activityCode: this.activity.id },
+    });
+    return await modal.present();
   }
 }
