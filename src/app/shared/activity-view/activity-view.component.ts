@@ -6,6 +6,7 @@ import { Modal } from "src/app/teacher/modals/modal";
 import { StudentActivity } from "src/app/models/student-activity";
 import { StudentService } from "src/app/services/student/student.service";
 import { ActivitiesViewComponent } from "../activities-view/activities-view.component";
+import { ResourceFile } from 'src/app/models/resource-file';
 
 @Component({
   selector: "app-activity-view",
@@ -62,7 +63,7 @@ export class ActivityViewComponent extends Modal {
       student_id: this.user.id,
     };
     if (this.file) {
-      let fileUpload: FileUpload = await this.studentService.uploadActivity(
+      let fileUpload: ResourceFile = await this.studentService.uploadActivity(
         this.file
       );
       studentActivity.file = fileUpload;
@@ -80,7 +81,10 @@ export class ActivityViewComponent extends Modal {
   async seeActivities() {
     const modal = await this.modalCtrl.create({
       component: ActivitiesViewComponent,
-      componentProps: { activityCode: this.activity.id },
+      componentProps: {
+        activityCode: this.activity.id,
+        activityTitle: this.activity.title,
+      },
     });
     return await modal.present();
   }
