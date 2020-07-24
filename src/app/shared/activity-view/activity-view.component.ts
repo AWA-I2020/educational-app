@@ -1,14 +1,67 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { Activity } from "src/app/models/activity";
+import { FileUpload } from "src/app/models/file";
+import { User } from "src/app/models/user";
+import { Modal } from "src/app/teacher/modals/modal";
+import { StudentActivity } from "src/app/models/student-activity";
+import { StudentService } from "src/app/services/student/student.service";
 
 @Component({
   selector: "app-activity-view",
   templateUrl: "./activity-view.component.html",
   styleUrls: ["./activity-view.component.scss"],
 })
-export class ActivityViewComponent implements OnInit {
+export class ActivityViewComponent extends Modal {
   @Input() activity: Activity;
-  constructor() {}
+  @Input() user: User;
+  format: string;
+  selectedFiles: FileList;
+  file: FileUpload;
+  activitySent: boolean = false;
+  constructor(private studentService: StudentService) {
+    super();
+  }
 
   ngOnInit() {}
+
+  ionViewWillEnter() {
+    if (this.activity.format === "PDF") {
+      this.format = ".pdf";
+    } else {
+      this.format = ".doc, .docx";
+    }
+    this.studentService
+      .getActivity(this.user.id, this.activity.id)
+      .subscribe((data) => {
+        if (data.length > 0) {
+          this.activitySent = true;
+        }
+      });
+  }
+
+  selectFile(event) {
+    this.selectedFiles = event.target.files;
+    this.file = new FileUpload(this.selectedFiles.item(0));
+  }
+
+  deleteFile() {
+    this.file = undefined;
+  }
+
+  async onSubmit() {
+    this.loading("Entregando actividad");
+    let fileUpload: FileUpload = await this.studentService.uploadActivity(
+      this.file
+    );
+    let studentActivity: StudentActivity = {
+      activity_id: this.activity.id,
+      student_id: this.user.id,
+      file: fileUpload,
+    };
+    this.studentService.addActivity(studentActivity).then(() => {
+      this.dismissLoading();
+      this.dismiss();
+      this.presentToast("Actividad entregada");
+    });
+  }
 }

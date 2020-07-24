@@ -39,6 +39,85 @@
         <ion-item>
           <h5>{{ activity.date.seconds * 1000 | date: "medium" }}</h5>
         </ion-item>
+        <ion-item>
+          <ion-label>
+            <h5>
+              <b>Fecha limite de entrega: </b>
+            </h5>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <h5>{{ activity.deadline.seconds * 1000 | date: "medium" }}</h5>
+        </ion-item>
+        <ion-item *ngIf="user.role != 'Estudiante' && !activitySent">
+          <ion-label>
+            <h5>
+              <b>Archivo: </b>
+            </h5>
+          </ion-label>
+        </ion-item>
+        <ion-grid fixed *ngIf="user.role != 'Estudiante' && !activitySent">
+          <ion-row *ngIf="file">
+            <ion-chip color="primary" mode="ios" outline="true">
+              <ion-label>
+                <h4>
+                  {{ file.file.name }}
+                  <ion-icon
+                    slot="start"
+                    name="trash"
+                    (click)="deleteFile()"
+                  ></ion-icon>
+                </h4>
+              </ion-label>
+            </ion-chip>
+          </ion-row>
+          <ion-row class="ion-justify-content-center">
+            <ion-button
+              expand="block"
+              (click)="chosenFile.click()"
+              fill="outline"
+              *ngIf="!file"
+            >
+              <ion-icon
+                lazy="true"
+                slot="start"
+                name="folder-outline"
+              ></ion-icon>
+              <ion-label slot="end">Escoger archivo</ion-label>
+              <input
+                style="display: none;"
+                type="file"
+                (change)="selectFile($event)"
+                id="file-input"
+                [accept]="format"
+                #chosenFile
+              />
+            </ion-button>
+          </ion-row>
+          <ion-row class="ion-justify-content-center">
+            <ion-button
+              *ngIf="file"
+              (click)="onSubmit()"
+              expand="block"
+              color="primary"
+              [disabled]="!file"
+            >
+              <ion-icon slot="start" name="send"></ion-icon>
+              Entregar actividad
+            </ion-button>
+          </ion-row>
+        </ion-grid>
+        <ion-grid fixed *ngIf="activitySent">
+          <ion-row class="ion-justify-content-center">
+            <ion-chip color="primary" mode="ios" outline="true">
+              <ion-label>
+                <h3>
+                  <b>Actividad entregada</b>
+                </h3>
+              </ion-label>
+            </ion-chip>
+          </ion-row>
+        </ion-grid>
       </ion-list>
     </ion-card-content>
   </ion-card>
