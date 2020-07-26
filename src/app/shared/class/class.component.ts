@@ -19,7 +19,8 @@ import { ResourceViewComponent } from "../resource-view/resource-view.component"
 import { ModalAddActivityHomeComponent } from "src/app/teacher/modals/modal-add-activity-home/modal-add-activity-home.component";
 import { ModalAddActivityQuestionComponent } from "src/app/teacher/modals/modal-add-activity-question/modal-add-activity-question.component";
 import { User } from "src/app/models/user";
-import { ShareOptionsComponent } from '../share-options/share-options.component';
+import { ShareOptionsComponent } from "../share-options/share-options.component";
+import { ActivityViewComponent } from "../activity-view/activity-view.component";
 
 @Component({
   selector: "app-class",
@@ -112,13 +113,25 @@ export class ClassComponent implements OnInit {
         modalCtrl: this.modalController,
         resource: resource,
         loadingController: this.loadingController,
+        toastController: this.toastController,
       },
     });
     return await modal.present();
   }
 
-  openActivity(activity: Activity) {
-    console.log("activity");
+  async openActivity(activity: Activity) {
+    const modal = await this.modalController.create({
+      component: ActivityViewComponent,
+      componentProps: {
+        modalCtrl: this.modalController,
+        activity: activity,
+        user: this.user,
+        loadingController: this.loadingController,
+        toastController: this.toastController,
+        indexedDbService: this.indexedDb
+      },
+    });
+    return await modal.present();
   }
 
   openStudent(student: ClassStudent) {
@@ -128,11 +141,10 @@ export class ClassComponent implements OnInit {
   async shareClass(ev) {
     const popover = await this.popoverController.create({
       component: ShareOptionsComponent,
-      componentProps: {code: this.class.id, class: true},
+      componentProps: { code: this.class.id, class: true },
       event: ev,
       translucent: true,
     });
     return await popover.present();
   }
-
 }

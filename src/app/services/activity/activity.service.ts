@@ -6,6 +6,7 @@ import {
 } from "@angular/fire/firestore";
 import { Activity } from "src/app/models/activity";
 import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
@@ -25,8 +26,15 @@ export class ActivityService {
       .collection<Activity>("activities", (ref) =>
         ref.where("class_id", "==", id)
       )
-      .valueChanges();
+      .snapshotChanges()
+      .pipe(
+        map((actions) => {
+          return actions.map((a) => {
+            const data = a.payload.doc.data();
+            const id = a.payload.doc.id;
+            return { id, ...data };
+          });
+        })
+      );
   }
-
-  
 }

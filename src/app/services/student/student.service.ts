@@ -8,6 +8,11 @@ import {
 import { Observable } from "rxjs";
 import { ClassStudent } from "src/app/models/class-student";
 import { StudentActivity } from "src/app/models/student-activity";
+import { AngularFireStorage } from "@angular/fire/storage";
+import { FileUpload } from "src/app/models/file";
+import { finalize, take, map } from "rxjs/operators";
+import { User } from "src/app/models/user";
+import { ResourceFile } from "src/app/models/resource-file";
 
 @Injectable({
   providedIn: "root",
@@ -18,7 +23,10 @@ export class StudentService {
     StudentActivity
   >;
 
-  constructor(private afs: AngularFirestore) {
+  constructor(
+    private afs: AngularFirestore,
+    private storage: AngularFireStorage
+  ) {
     this.classesStudentsCollection = this.afs.collection<ClassStudent>(
       "classes-students"
     );
@@ -43,11 +51,61 @@ export class StudentService {
     return this.studentActivitiesCollection.add(data);
   }
 
-  getActivities(id: string): Observable<StudentActivity[]> {
+  getActivitiesOfStudents(id: string): Observable<StudentActivity[]> {
     return this.afs
       .collection<StudentActivity>("students-activities", (ref) =>
         ref.where("activity_id", "==", id)
       )
       .valueChanges();
+  }
+
+  getActivity(
+    studentId: string,
+    activityId: string
+  ): Observable<StudentActivity[]> {
+    return this.afs
+      .collection<StudentActivity>("students-activities", (ref) =>
+        ref
+          .where("activity_id", "==", activityId)
+          .where("student_id", "==", studentId)
+      )
+      .valueChanges()
+      .pipe(
+        take(1),
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
+  uploadActivity(file: FileUpload): Promise<ResourceFile> {
+    return new Promise((resolve, reject) => {
+      let data: ResourceFile;
+      const filePath = `activities/${file.file.name}`;
+      const ref = this.storage.ref(filePath);
+      const task = this.storage.upload(filePath, file.file);
+      task
+        .snapshotChanges()
+        .pipe(
+          finalize(() => {
+            ref.getDownloadURL().subscribe((url) => {
+              data = { name: file.file.name, fileURL: url, icon: "download" };
+              resolve(data);
+            });
+          })
+        )
+        .subscribe();
+    });
+  }
+
+  getStudent(id: string): Observable<User> {
+    let userDoc = this.afs.doc<User>(`users/${id}`);
+    return userDoc.valueChanges().pipe(
+      take(1),
+      map((student) => {
+        student.id = id;
+        return student;
+      })
+    );
   }
 }

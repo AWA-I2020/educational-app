@@ -1,3 +1,9 @@
 export interface Activity {
-  name: string;
+  title: string;
+  description: string;
+  format: string;
+  date: Date;
+  class_id: string;
+  deadline: Date;
+  id?: string;
 }

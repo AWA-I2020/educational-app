@@ -23,6 +23,8 @@ import { ResourceComponent } from "./shared/resource/resource.component";
 import { ResourceViewComponent } from "./shared/resource-view/resource-view.component";
 import { HttpClientModule } from "@angular/common/http";
 import { ShareOptionsComponent } from "./shared/share-options/share-options.component";
+import { ActivityViewComponent } from "./shared/activity-view/activity-view.component";
+import { ActivitiesViewComponent } from "./shared/activities-view/activities-view.component";
 
 const dbConfig: DBConfig = {
   name: "EducationalDb",
@@ -53,6 +55,17 @@ const dbConfig: DBConfig = {
         { name: "files", keypath: "files", options: { unique: false } },
       ],
     },
+    {
+      storeConfig: { keyPath: "id", autoIncrement: true },
+      store: "activities",
+      storeSchema: [
+        {
+          name: "activities",
+          keypath: "activities",
+          options: { unique: false },
+        },
+      ],
+    },
   ],
 };
 
@@ -65,11 +78,15 @@ const dbConfig: DBConfig = {
     ClassComponent,
     ResourceComponent,
     ResourceViewComponent,
+    ActivityViewComponent,
+    ActivitiesViewComponent,
     ShareOptionsComponent,
   ],
   entryComponents: [
     ResourceComponent,
     ResourceViewComponent,
+    ActivityViewComponent,
+    ActivitiesViewComponent,
     ShareOptionsComponent,
   ],
   imports: [

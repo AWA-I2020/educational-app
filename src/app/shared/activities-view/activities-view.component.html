@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Actividades entregadas</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+      <ion-list-header>
+        <ion-label>{{ activityTitle }}</ion-label>
+      </ion-list-header>
+      <ion-list *ngIf="activities.length > 0; else noActivities">
+        <ion-item *ngFor="let activity of activities">
+          <ion-label>
+            <h2>
+              {{ activity.student.completeName }}
+            </h2>
+            <ion-chip
+              *ngIf="activity.file"
+              color="primary"
+              mode="ios"
+              outline="true"
+              (click)="downloadFile(activity.file.name)"
+            >
+              <ion-label>{{ activity.file.name }}</ion-label>
+              <ion-icon [name]="activity.file.icon"></ion-icon>
+            </ion-chip>
+            <p *ngIf="activity.textActivity">
+              {{ activity.textActivity }}
+            </p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+      <ng-template #noActivities>
+        <ion-list>
+          <ion-list-header>
+            <ion-label>{{ activityTitle }}</ion-label>
+          </ion-list-header>
+          <ion-list-header>
+            <ion-label>No se entregaron actividades aun.</ion-label>
+          </ion-list-header>
+        </ion-list>
+      </ng-template>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
