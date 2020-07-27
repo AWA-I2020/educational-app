@@ -28,7 +28,6 @@ export class ActivitiesViewComponent extends Modal {
     this.indexedDbService.getByKey("activities", this.activityCode).then(
       (data) => {
         if (data) {
-          console.log(data);
           this.activities = data.activities;
         } else {
           this.studentService
