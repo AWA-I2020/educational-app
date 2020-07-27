@@ -1,6 +1,8 @@
-import { NgModule } from "@angular/core";
+import { LOCALE_ID, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouteReuseStrategy } from "@angular/router";
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
 
 import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
@@ -68,6 +70,7 @@ const dbConfig: DBConfig = {
     },
   ],
 };
+registerLocaleData(localeEs, 'es')
 
 @NgModule({
   exports: [SignInComponent, SignUpComponent, ClassComponent],
@@ -110,6 +113,7 @@ const dbConfig: DBConfig = {
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: LOCALE_ID, useValue: 'es' }
   ],
   bootstrap: [AppComponent],
 })

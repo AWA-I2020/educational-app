@@ -37,7 +37,7 @@
           </ion-label>
         </ion-item>
         <ion-item>
-          <h5>{{ activity.date.seconds * 1000 | date: "medium" }}</h5>
+          <h5>{{ activity.date | date: "EEEE  d LLLL y  HH:mm" }}</h5>
         </ion-item>
         <ion-item>
           <ion-label>
@@ -47,7 +47,7 @@
           </ion-label>
         </ion-item>
         <ion-item>
-          <h5>{{ activity.deadline.seconds * 1000 | date: "medium" }}</h5>
+          <h5>{{ activity.deadline | date: "EEEE  d LLLL y  HH:mm" }}</h5>
         </ion-item>
         <ion-item>
           <ion-label>
@@ -67,16 +67,23 @@
           </ion-label>
         </ion-item>
         <ion-item *ngIf="user.role == 'Estudiante' && textField">
-          <ion-textarea required rows="6" placeholder="Escriba la actividad..." [(ngModel)]="textActivity"></ion-textarea>
+          <ion-textarea
+            required
+            rows="6"
+            placeholder="Escriba la actividad..."
+            [(ngModel)]="textActivity"
+          ></ion-textarea>
         </ion-item>
-        <ion-item *ngIf="user.role == 'Estudiante' && !activitySent && !textField">
+        <ion-item
+          *ngIf="user.role == 'Estudiante' && !activitySent && !textField"
+        >
           <ion-label>
             <h5>
               <b>Archivo: </b>
             </h5>
           </ion-label>
         </ion-item>
-        <ion-grid fixed *ngIf="user.role == 'Estudiante' && !activitySent" >
+        <ion-grid fixed *ngIf="user.role == 'Estudiante' && !activitySent">
           <ion-row *ngIf="file">
             <ion-chip color="primary" mode="ios" outline="true">
               <ion-label>
@@ -137,7 +144,10 @@
               </ion-label>
             </ion-chip>
           </ion-row>
-          <ion-row class="ion-justify-content-center" *ngIf="user.role == 'Profesor'">
+          <ion-row
+            class="ion-justify-content-center"
+            *ngIf="user.role == 'Profesor'"
+          >
             <ion-button (click)="seeActivities()" expand="block">
               Ver actividades entregadas
             </ion-button>

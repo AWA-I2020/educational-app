@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { Resource } from "src/app/models/resource";
 import { Modal } from "src/app/teacher/modals/modal";
 import { FileService } from "src/app/services/file/file.service";

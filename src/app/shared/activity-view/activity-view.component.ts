@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { Activity } from "src/app/models/activity";
 import { FileUpload } from "src/app/models/file";
 import { User } from "src/app/models/user";
