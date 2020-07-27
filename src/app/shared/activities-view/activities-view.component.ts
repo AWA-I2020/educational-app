@@ -3,6 +3,7 @@ import { StudentService } from "src/app/services/student/student.service";
 import { StudentActivity } from "src/app/models/student-activity";
 import { FileService } from "src/app/services/file/file.service";
 import { Modal } from "src/app/teacher/modals/modal";
+import { User } from "src/app/models/user";
 
 @Component({
   selector: "app-activities-view",
@@ -27,20 +28,14 @@ export class ActivitiesViewComponent extends Modal {
     this.indexedDbService.getByKey("activities", this.activityCode).then(
       (data) => {
         if (data) {
+          console.log(data);
           this.activities = data.activities;
         } else {
           this.studentService
             .getActivitiesOfStudents(this.activityCode)
             .subscribe((data) => {
               if (data.length > 0) {
-                data.forEach((student) => {
-                  this.studentService
-                    .getStudent(student.student_id)
-                    .subscribe((studentData) => {
-                      student.student = studentData;
-                      this.activities.push(student);
-                    });
-                });
+                this.activities = data;
                 this.indexedDbService.add("activities", {
                   id: this.activityCode,
                   activities: this.activities,

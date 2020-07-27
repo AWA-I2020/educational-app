@@ -56,7 +56,16 @@ export class StudentService {
       .collection<StudentActivity>("students-activities", (ref) =>
         ref.where("activity_id", "==", id)
       )
-      .valueChanges();
+      .snapshotChanges()
+      .pipe(
+        map((actions) => {
+          return actions.map((a) => {
+            const data = a.payload.doc.data();
+            const id = a.payload.doc.id;
+            return { id, ...data };
+          });
+        })
+      );
   }
 
   getActivity(

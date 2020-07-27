@@ -18,7 +18,7 @@
         <ion-item *ngFor="let activity of activities">
           <ion-label>
             <h2>
-              {{ activity.student.completeName }}
+              {{ activity.student }}
             </h2>
             <ion-chip
               *ngIf="activity.file"
@@ -39,9 +39,6 @@
       <ng-template #noActivities>
         <ion-list>
           <ion-list-header>
-            <ion-label>{{ activityTitle }}</ion-label>
-          </ion-list-header>
-          <ion-list-header>
             <ion-label>No se entregaron actividades aun.</ion-label>
           </ion-list-header>
         </ion-list>
@@ -49,3 +46,4 @@
     </ion-card-content>
   </ion-card>
 </ion-content>
+activity_id
