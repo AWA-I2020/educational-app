@@ -1,8 +1,9 @@
 import { LOCALE_ID, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouteReuseStrategy } from "@angular/router";
-import { registerLocaleData } from '@angular/common';
-import localeEs from '@angular/common/locales/es';
+import { registerLocaleData, AsyncPipe } from "@angular/common";
+import localeEs from "@angular/common/locales/es";
+import { AngularFireMessagingModule } from "@angular/fire/messaging";
 
 import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
@@ -27,6 +28,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { ShareOptionsComponent } from "./shared/share-options/share-options.component";
 import { ActivityViewComponent } from "./shared/activity-view/activity-view.component";
 import { ActivitiesViewComponent } from "./shared/activities-view/activities-view.component";
+import { MessagingService } from "./shared/messaging/messaging.service";
 
 const dbConfig: DBConfig = {
   name: "EducationalDb",
@@ -70,7 +72,7 @@ const dbConfig: DBConfig = {
     },
   ],
 };
-registerLocaleData(localeEs, 'es')
+registerLocaleData(localeEs, "es");
 
 @NgModule({
   exports: [SignInComponent, SignUpComponent, ClassComponent],
@@ -100,6 +102,7 @@ registerLocaleData(localeEs, 'es')
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFirestoreModule.enablePersistence(),
+    AngularFireMessagingModule,
     HttpClientModule,
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production,
@@ -113,7 +116,9 @@ registerLocaleData(localeEs, 'es')
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: LOCALE_ID, useValue: 'es' }
+    { provide: LOCALE_ID, useValue: "es" },
+    MessagingService,
+    AsyncPipe,
   ],
   bootstrap: [AppComponent],
 })

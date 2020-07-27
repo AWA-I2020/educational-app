@@ -10,6 +10,7 @@ import { TeacherService } from "../services/teacher/teacher.service";
 import { NgxIndexedDBService } from "ngx-indexed-db";
 import { User } from "../models/user";
 import { Router } from "@angular/router";
+import { MessagingService } from "../shared/messaging/messaging.service";
 
 @Component({
   selector: "app-teacher",
@@ -28,19 +29,22 @@ export class TeacherPage implements OnInit {
     private teacherService: TeacherService,
     private indexedDbService: NgxIndexedDBService,
     private toastController: ToastController,
-    private router: Router
+    private router: Router,
+    private messagingService: MessagingService
   ) {}
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.messagingService.requestPermission();
+    this.messagingService.receiveMessage();
+    console.log(this.messagingService.currentMessage)
+  }
 
   ionViewWillEnter() {
     this.indexedDbService.getAll("user").then((data) => {
       this.user = (data[0] as unknown) as User;
-      this.teacherService
-        .getClasses((this.user.id))
-        .subscribe((classesData) => {
-          this.classes = classesData;
-        });
+      this.teacherService.getClasses(this.user.id).subscribe((classesData) => {
+        this.classes = classesData;
+      });
     });
   }
 
@@ -49,7 +53,7 @@ export class TeacherPage implements OnInit {
   }
 
   profile() {
-    this.router.navigate(['/teacher/profile']);
+    this.router.navigate(["/teacher/profile"]);
   }
 
   async openModal() {
@@ -58,7 +62,7 @@ export class TeacherPage implements OnInit {
       componentProps: {
         modalCtrl: this.modalController,
         toastController: this.toastController,
-        indexedDbService: this.indexedDbService
+        indexedDbService: this.indexedDbService,
       },
     });
     return await modal.present();
