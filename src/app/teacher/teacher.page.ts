@@ -10,7 +10,7 @@ import { TeacherService } from "../services/teacher/teacher.service";
 import { NgxIndexedDBService } from "ngx-indexed-db";
 import { User } from "../models/user";
 import { Router } from "@angular/router";
-import { MessagingService } from "../shared/messaging/messaging.service";
+import { MessagingService } from "../services/messaging/messaging.service";
 
 @Component({
   selector: "app-teacher",
@@ -34,7 +34,7 @@ export class TeacherPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.messagingService.requestPermission();
+    this.messagingService.requestPermission(this.user.id);
     this.messagingService.receiveMessage();
     console.log(this.messagingService.currentMessage)
   }
