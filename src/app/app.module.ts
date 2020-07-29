@@ -28,7 +28,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { ShareOptionsComponent } from "./shared/share-options/share-options.component";
 import { ActivityViewComponent } from "./shared/activity-view/activity-view.component";
 import { ActivitiesViewComponent } from "./shared/activities-view/activities-view.component";
-import { MessagingService } from "./shared/messaging/messaging.service";
+import { MessagingService } from "./services/messaging/messaging.service";
 
 const dbConfig: DBConfig = {
   name: "EducationalDb",

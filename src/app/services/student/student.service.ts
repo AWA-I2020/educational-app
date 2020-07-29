@@ -35,7 +35,7 @@ export class StudentService {
     );
   }
 
-  addstudent(data: ClassStudent): Promise<DocumentReference> {
+  addStudent(data: ClassStudent): Promise<DocumentReference> {
     return this.classesStudentsCollection.add(data);
   }
 
@@ -78,11 +78,14 @@ export class StudentService {
           .where("activity_id", "==", activityId)
           .where("student_id", "==", studentId)
       )
-      .valueChanges()
+      .snapshotChanges()
       .pipe(
-        take(1),
-        map((data) => {
-          return data;
+        map((actions) => {
+          return actions.map((a) => {
+            const data = a.payload.doc.data();
+            const id = a.payload.doc.id;
+            return { id, ...data };
+          });
         })
       );
   }
@@ -116,5 +119,39 @@ export class StudentService {
         return student;
       })
     );
+  }
+
+  getStudentClass(id: string): Observable<ClassStudent> {
+    return this.classesStudentsCollection
+      .doc<ClassStudent>(id)
+      .valueChanges()
+      .pipe(
+        take(1),
+        map((studentClass) => {
+          studentClass.id = id;
+          return studentClass;
+        })
+      );
+  }
+
+  getStudentsOfClass(id: string): Observable<ClassStudent[]> {
+    return this.afs
+      .collection<ClassStudent>("classes-students", (ref) =>
+        ref.where("class_id", "==", id)
+      )
+      .snapshotChanges()
+      .pipe(
+        map((actions) => {
+          return actions.map((a) => {
+            const data = a.payload.doc.data();
+            const id = a.payload.doc.id;
+            return { id, ...data };
+          });
+        })
+      );
+  }
+
+  updateStudent(student: ClassStudent) {
+    return this.classesStudentsCollection.doc(student.id).update(student);
   }
 }
