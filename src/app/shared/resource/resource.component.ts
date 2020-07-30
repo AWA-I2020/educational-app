@@ -9,6 +9,10 @@ import {
 import { FileUpload } from "src/app/models/file";
 import { ResourceService } from "src/app/services/resource/resource.service";
 import { Resource } from "src/app/models/resource";
+import { StudentService } from "src/app/services/student/student.service";
+import { Notification } from "src/app/models/notification";
+import { Class } from "src/app/models/class";
+import { NotificationsService } from "src/app/services/notifications/notifications.service";
 
 @Component({
   selector: "app-resource",
@@ -16,7 +20,7 @@ import { Resource } from "src/app/models/resource";
   styleUrls: ["./resource.component.scss"],
 })
 export class ResourceComponent extends Modal {
-  @Input() class_id: string;
+  @Input() class: Class;
   selectedFiles: FileList;
   files: FileUpload[] = [];
   resourceForm = new FormGroup({
@@ -25,7 +29,11 @@ export class ResourceComponent extends Modal {
     file: new FormControl("", Validators.required),
   });
 
-  constructor(private resourceService: ResourceService) {
+  constructor(
+    private resourceService: ResourceService,
+    private studentService: StudentService,
+    private notificationsService: NotificationsService
+  ) {
     super();
   }
 
@@ -52,7 +60,7 @@ export class ResourceComponent extends Modal {
   async onSubmit() {
     this.loading("Publicando recurso");
     let resource: Resource = {
-      class_id: this.class_id,
+      class_id: this.class.id,
       description: this.description.value,
       files: [],
       name: this.name.value,
@@ -62,8 +70,21 @@ export class ResourceComponent extends Modal {
       resource.files = await this.resourceService.uploadFiles(this.files);
     }
     this.resourceService.addResource(resource).then(() => {
-      this.dismiss();
       this.dismissLoading();
+      let notification: Notification = {
+        title: "Nuevo recurso",
+        body: `Tu profesor publico un nuevo recurso en ${this.class.subject}`,
+      };
+      this.studentService
+        .getStudentsOfClass(this.class.id)
+        .subscribe((data) => {
+          data.forEach((student) => {
+            this.notificationsService
+              .sendNotification(student.token, notification)
+              .subscribe((data) => {});
+          });
+        });
+      this.dismiss();
       this.presentToast("Recurso publicado");
     });
   }
@@ -85,5 +106,4 @@ export class ResourceComponent extends Modal {
   get file(): AbstractControl {
     return this.resourceForm.get("file");
   }
- 
 }
