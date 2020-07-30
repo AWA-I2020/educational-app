@@ -33,11 +33,7 @@ export class TeacherPage implements OnInit {
     private messagingService: MessagingService
   ) {}
 
-  ngOnInit() {
-    this.messagingService.requestPermission(this.user.id);
-    this.messagingService.receiveMessage();
-    console.log(this.messagingService.currentMessage)
-  }
+  ngOnInit() {}
 
   ionViewWillEnter() {
     this.indexedDbService.getAll("user").then((data) => {
@@ -45,6 +41,8 @@ export class TeacherPage implements OnInit {
       this.teacherService.getClasses(this.user.id).subscribe((classesData) => {
         this.classes = classesData;
       });
+      this.messagingService.requestPermission(this.user.id);
+      this.messagingService.receiveMessage();
     });
   }
 
