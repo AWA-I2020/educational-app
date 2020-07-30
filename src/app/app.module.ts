@@ -70,6 +70,17 @@ const dbConfig: DBConfig = {
         },
       ],
     },
+    {
+      storeConfig: { keyPath: "id", autoIncrement: true },
+      store: "notifications",
+      storeSchema: [
+        {
+          name: "notification",
+          keypath: "notification",
+          options: { unique: false },
+        },
+      ],
+    },
   ],
 };
 registerLocaleData(localeEs, "es");
