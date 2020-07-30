@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import {
   AngularFirestore,
-  AngularFirestoreDocument,
   AngularFirestoreCollection,
   DocumentReference,
 } from "@angular/fire/firestore";
@@ -44,7 +43,16 @@ export class StudentService {
       .collection<ClassStudent>("classes-students", (ref) =>
         ref.where("student_id", "==", id)
       )
-      .valueChanges();
+      .snapshotChanges()
+      .pipe(
+        map((actions) => {
+          return actions.map((a) => {
+            const data = a.payload.doc.data();
+            const id = a.payload.doc.id;
+            return { id, ...data };
+          });
+        })
+      );
   }
 
   addActivity(data: StudentActivity): Promise<DocumentReference> {
@@ -119,19 +127,6 @@ export class StudentService {
         return student;
       })
     );
-  }
-
-  getStudentClass(id: string): Observable<ClassStudent> {
-    return this.classesStudentsCollection
-      .doc<ClassStudent>(id)
-      .valueChanges()
-      .pipe(
-        take(1),
-        map((studentClass) => {
-          studentClass.id = id;
-          return studentClass;
-        })
-      );
   }
 
   getStudentsOfClass(id: string): Observable<ClassStudent[]> {

@@ -4,6 +4,8 @@ import { BehaviorSubject } from "rxjs";
 import { StudentService } from "../student/student.service";
 import { ClassStudent } from "src/app/models/class-student";
 import { ToastController } from "@ionic/angular";
+import { NgxIndexedDBService } from "ngx-indexed-db";
+import { Notification } from "src/app/models/notification";
 
 @Injectable()
 export class MessagingService {
@@ -12,7 +14,8 @@ export class MessagingService {
   constructor(
     private angularFireMessaging: AngularFireMessaging,
     private studentService: StudentService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private dbService: NgxIndexedDBService
   ) {
     this.angularFireMessaging.onMessage((payload) => {
       console.log(payload);
@@ -21,27 +24,32 @@ export class MessagingService {
 
   requestPermission(id: string) {
     this.angularFireMessaging.requestToken.subscribe((token) => {
-      this.studentService.getStudentClass(id).subscribe((data) => {
-        if (token != data.token) {
-          let student: ClassStudent = {
-            class_id: data.class_id,
-            student_id: id,
-            token: token,
-          };
-          this.studentService.updateStudent(student).then(() => {
-            console.log(token);
-          });
-        }
-        console.log(token);
+      this.studentService.getClassesOfStudent(id).subscribe((data) => {
+        data.forEach((studentClass) => {
+          if (token != studentClass.token) {
+            let student: ClassStudent = {
+              class_id: studentClass.class_id,
+              student_id: id,
+              token: token,
+              id: studentClass.id,
+            };
+            this.studentService.updateStudent(student).then(() => {});
+          }
+        });
       });
     });
   }
 
   receiveMessage() {
     this.angularFireMessaging.messages.subscribe((msg) => {
-      console.log("show message!", msg);
       this.currentMessage.next(msg);
-      this.presentToast(JSON.stringify(msg));
+      let notification: Notification = {
+        title: msg["notification"].title,
+        body: msg["notification"].body,
+        dateReceived: new Date(Date.now()),
+      };
+      this.presentToast(msg["notification"].body);
+      this.dbService.add("notifications", notification);
     });
   }
 
