@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { Modal } from "../modal";
+import { Modal } from "../../../shared/modal";
 import { Class } from "src/app/models/class";
 import {
   FormGroup,
