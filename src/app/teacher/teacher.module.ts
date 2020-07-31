@@ -8,9 +8,10 @@ import { TeacherPageRoutingModule } from './teacher-routing.module';
 
 import { TeacherPage } from './teacher.page';
 import { ModalAddClassComponent } from './modals/modal-add-class/modal-add-class.component';
-import { ProfileComponent } from '../shared/profile/profile.component';
 import { ModalAddActivityHomeComponent } from './modals/modal-add-activity-home/modal-add-activity-home.component';
 import { ModalAddActivityQuestionComponent } from './modals/modal-add-activity-question/modal-add-activity-question.component';
+import { ProfileComponent } from '../shared/profile/profile.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -19,14 +20,14 @@ import { ModalAddActivityQuestionComponent } from './modals/modal-add-activity-q
     IonicModule,
     TeacherPageRoutingModule,
     ReactiveFormsModule,
+    SharedModule
   ],
   declarations: [
     TeacherPage,
     ModalAddClassComponent,
-    ProfileComponent,
     ModalAddActivityHomeComponent,
     ModalAddActivityQuestionComponent,
   ],
-  schemas:[CUSTOM_ELEMENTS_SCHEMA]
+//  exports:[ProfileComponent]
 })
 export class TeacherPageModule { }
