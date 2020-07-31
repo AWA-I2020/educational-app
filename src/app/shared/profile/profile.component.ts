@@ -12,7 +12,10 @@ export class ProfileComponent implements OnInit {
 
   @Input() user: User;
 
-  constructor(private toastController: ToastController, private popover: PopoverController) { }
+  constructor(
+    private toastController: ToastController, 
+    private popover: PopoverController
+    ) { }
 
   ngOnInit() { }
 
