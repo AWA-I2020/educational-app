@@ -30,6 +30,8 @@ import { ActivityViewComponent } from "./shared/activity-view/activity-view.comp
 import { ActivitiesViewComponent } from "./shared/activities-view/activities-view.component";
 import { MessagingService } from "./services/messaging/messaging.service";
 import { StudentPageModule } from './student/student.module';
+import { ProfileComponent } from './shared/profile/profile.component';
+import { SharedModule } from './shared/shared.module';
 
 const dbConfig: DBConfig = {
   name: "EducationalDb",
@@ -87,7 +89,11 @@ const dbConfig: DBConfig = {
 registerLocaleData(localeEs, "es");
 
 @NgModule({
-  exports: [SignInComponent, SignUpComponent, ClassComponent],
+  exports: [
+    SignInComponent,
+    SignUpComponent,
+    ClassComponent,
+  ],
   declarations: [
     AppComponent,
     SignInComponent,
@@ -123,7 +129,7 @@ registerLocaleData(localeEs, "es");
     ReactiveFormsModule,
     TeacherPageModule,
     NgxIndexedDBModule.forRoot(dbConfig),
-    StudentPageModule
+    StudentPageModule,
   ],
   providers: [
     StatusBar,
