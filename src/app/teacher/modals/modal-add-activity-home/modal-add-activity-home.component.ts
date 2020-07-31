@@ -8,6 +8,10 @@ import {
 } from "@angular/forms";
 import { ActivityService } from "src/app/services/activity/activity.service";
 import { Activity } from "src/app/models/activity";
+import { Class } from "src/app/models/class";
+import { Notification } from "src/app/models/notification";
+import { StudentService } from "src/app/services/student/student.service";
+import { NotificationsService } from "src/app/services/notifications/notifications.service";
 
 @Component({
   selector: "app-modal-add-activity-home",
@@ -15,7 +19,7 @@ import { Activity } from "src/app/models/activity";
   styleUrls: ["./modal-add-activity-home.component.scss"],
 })
 export class ModalAddActivityHomeComponent extends Modal {
-  @Input() class_id: string;
+  @Input() class: Class;
   formats: string[] = ["PDF", "WORD", "TEXTO"];
   homeWorkForm = new FormGroup({
     title: new FormControl("", Validators.required),
@@ -23,7 +27,11 @@ export class ModalAddActivityHomeComponent extends Modal {
     format: new FormControl("", Validators.required),
     deadline: new FormControl("", Validators.required),
   });
-  constructor(private activityService: ActivityService) {
+  constructor(
+    private activityService: ActivityService,
+    private studentService: StudentService,
+    private notificationsService: NotificationsService
+  ) {
     super();
   }
 
@@ -32,7 +40,7 @@ export class ModalAddActivityHomeComponent extends Modal {
   onSubmit() {
     this.loading("Publicando actividad");
     let activity: Activity = {
-      class_id: this.class_id,
+      class_id: this.class.id,
       date: new Date(Date.now()),
       description: this.description.value,
       format: this.format.value,
@@ -40,6 +48,19 @@ export class ModalAddActivityHomeComponent extends Modal {
       title: this.title.value,
     };
     this.activityService.addActivity(activity).then(() => {
+      let notification: Notification = {
+        title: "Nueva actividad",
+        body: `Tu profesor publico una nuevo actividad en ${this.class.subject}`,
+      };
+      this.studentService
+        .getStudentsOfClass(this.class.id)
+        .subscribe((data) => {
+          data.forEach((student) => {
+            this.notificationsService
+              .sendNotification(student.token, notification)
+              .subscribe((data) => {});
+          });
+        });
       this.dismiss();
       this.dismissLoading();
       this.presentToast("Actividad publicada");

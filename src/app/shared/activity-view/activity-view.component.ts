@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { Activity } from "src/app/models/activity";
 import { FileUpload } from "src/app/models/file";
 import { User } from "src/app/models/user";
@@ -6,7 +6,7 @@ import { Modal } from "src/app/teacher/modals/modal";
 import { StudentActivity } from "src/app/models/student-activity";
 import { StudentService } from "src/app/services/student/student.service";
 import { ActivitiesViewComponent } from "../activities-view/activities-view.component";
-import { ResourceFile } from 'src/app/models/resource-file';
+import { ResourceFile } from "src/app/models/resource-file";
 
 @Component({
   selector: "app-activity-view",
@@ -62,6 +62,10 @@ export class ActivityViewComponent extends Modal {
       activity_id: this.activity.id,
       student_id: this.user.id,
     };
+    this.studentService.getStudent(this.user.id).subscribe((data) => {
+      studentActivity.student = data.completeName;
+    });
+    
     if (this.file) {
       let fileUpload: ResourceFile = await this.studentService.uploadActivity(
         this.file
@@ -87,7 +91,7 @@ export class ActivityViewComponent extends Modal {
         modalCtrl: this.modalCtrl,
         loadingController: this.loadingController,
         toastController: this.toastController,
-        indexedDbService: this.indexedDbService
+        indexedDbService: this.indexedDbService,
       },
     });
     return await modal.present();

@@ -72,7 +72,7 @@ export class ClassComponent implements OnInit {
       component: ResourceComponent,
       componentProps: {
         modalCtrl: this.modalController,
-        class_id: this.class.id,
+        class: this.class,
         loadingController: this.loadingController,
         toastController: this.toastController,
       },
@@ -85,7 +85,7 @@ export class ClassComponent implements OnInit {
       component: ModalAddActivityHomeComponent,
       componentProps: {
         modalCtrl: this.modalController,
-        class_id: this.class.id,
+        class: this.class,
         loadingController: this.loadingController,
         toastController: this.toastController,
       },
@@ -128,7 +128,7 @@ export class ClassComponent implements OnInit {
         user: this.user,
         loadingController: this.loadingController,
         toastController: this.toastController,
-        indexedDbService: this.indexedDb
+        indexedDbService: this.indexedDb,
       },
     });
     return await modal.present();

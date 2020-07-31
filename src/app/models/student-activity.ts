@@ -7,5 +7,5 @@ export interface StudentActivity {
   student_id: string;
   file?: ResourceFile;
   textActivity?: string;
-  student?: User;
+  student?: string;
 }

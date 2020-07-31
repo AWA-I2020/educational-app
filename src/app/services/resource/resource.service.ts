@@ -9,6 +9,8 @@ import { Observable } from "rxjs";
 import { AngularFireStorage } from "@angular/fire/storage";
 import { FileUpload } from "src/app/models/file";
 import { finalize, map } from "rxjs/operators";
+import { firestore } from "firebase/app";
+import Timestamp = firestore.Timestamp;
 
 @Injectable({
   providedIn: "root",
@@ -36,6 +38,9 @@ export class ResourceService {
         map((actions) => {
           return actions.map((a) => {
             const data = a.payload.doc.data();
+            Object.keys(data)
+              .filter((key) => data[key] instanceof Timestamp)
+              .forEach((key) => (data[key] = data[key].toDate()));
             const id = a.payload.doc.id;
             return { id, ...data };
           });
