@@ -1,3 +1,10 @@
+import { FileUpload } from './file';
+
 export interface Resource {
-    fileURL: string;
+  date: Date;
+  files: FileUpload[];
+  description: string;
+  name: string;
+  class_id: string;
+  id?: string;
 }

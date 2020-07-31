@@ -1,7 +1,7 @@
 export class FileUpload {
   name: string;
   url: string;
-  file: File;
+  file?: File;
   id?: string;
 
   constructor(file: File) {

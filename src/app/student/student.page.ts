@@ -1,7 +1,7 @@
-import { Component, OnInit } from "@angular/core";
-import { ProfileComponent } from "../shared/profile/profile.component";
-import { PopoverController } from "@ionic/angular";
-import { Class } from "../models/class";
+import { Component, OnInit } from '@angular/core';
+import { MenuController, PopoverController } from '@ionic/angular';
+import { ProfileComponent } from '../shared/profile/profile.component';
+import { Class } from '../models/class';
 
 @Component({
   selector: "app-student",
@@ -9,6 +9,7 @@ import { Class } from "../models/class";
   styleUrls: ["./student.page.scss"],
 })
 export class StudentPage implements OnInit {
+
   classes: Class[] = [
     {
       subject: "Matematicas",
@@ -18,9 +19,10 @@ export class StudentPage implements OnInit {
       id: "safasd",
     },
   ];
-  constructor(private popoverController: PopoverController) {}
+  constructor(private menu: MenuController, private popoverController: PopoverController) { }
 
-  ngOnInit() {}
+  ngOnInit(): void {
+  }
 
   async showOptions(ev) {
     const popover = await this.popoverController.create({
@@ -31,7 +33,17 @@ export class StudentPage implements OnInit {
     return await popover.present();
   }
 
-  openClass(id: string) {
-    console.log("open class", id);
+  openFirst() {
+    this.menu.enable(true, 'first');
+    this.menu.open('first');
+  }
+
+  openEnd() {
+    this.menu.open('end');
+  }
+
+  openCustom() {
+    this.menu.enable(true, 'custom');
+    this.menu.open('custom');
   }
 }

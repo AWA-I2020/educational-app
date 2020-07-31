@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Actividad</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-grid fixed>
+        <ion-row class="ion-justify-content-center">
+          <ion-card-title>Agregar actividad de casa</ion-card-title>
+        </ion-row>
+      </ion-grid>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form [formGroup]="homeWorkForm" (ngSubmit)="onSubmit()">
+        <ion-item>
+          <ion-label position="floating"
+            >Titulo de la Actividad <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-input required formControlName="title" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating"
+            >Descripción <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-textarea
+            required
+            formControlName="description"
+            type="text"
+          ></ion-textarea>
+        </ion-item>
+        <ion-item>
+          <ion-label>Fecha de entrega: </ion-label>
+          <ion-datetime
+            required
+            formControlName="deadline"
+            displayFormat="D MMM YYYY H:mm"
+            min="2020"
+            max="2030"
+          ></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating"
+            >Formato <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-select
+            formControlName="format"
+            okText="Aceptar"
+            cancelText="Cerrar"
+          >
+            <ion-select-option
+              value="{{ item }}"
+              *ngFor="let item of formats"
+              >{{ item }}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+
+        <ion-grid fixed>
+          <ion-row class="ion-justify-content-center">
+            <ion-fab-button
+              color="primary"
+              type="submit"
+              (click)="onSubmit()"
+              [disabled]="homeWorkForm.invalid"
+            >
+              <ion-icon name="checkmark"></ion-icon>
+            </ion-fab-button>
+          </ion-row>
+        </ion-grid>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

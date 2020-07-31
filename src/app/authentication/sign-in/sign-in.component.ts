@@ -45,7 +45,7 @@ export class SignInComponent implements OnInit {
         ) {
           this.signInForm.reset();
           user.password = "";
-          this.dismiss();
+
           this.dbService.add("user", user).then(
             () => {
               this.presentToast("Inició sesión correctamente.");
@@ -63,6 +63,7 @@ export class SignInComponent implements OnInit {
               console.log(error);
             }
           );
+          this.dismiss();
         } else {
           this.dismiss();
           this.presentToast("Credenciales incorrectos.");
