@@ -1,14 +1,22 @@
 import { Component, OnInit } from '@angular/core';
+import { Modal } from 'src/app/shared/modal';
+import { ClassService } from 'src/app/services/class/class.service';
+import { FormGroup, FormControl, Validators,} from '@angular/forms';
 
 @Component({
   selector: 'app-register-class',
   templateUrl: './register-class.component.html',
-  styleUrls: ['./register-class.component.scss'],
 })
-export class RegisterClassComponent implements OnInit {
+export class RegisterClassComponent extends Modal {
 
-  constructor() { }
+  registerForm = new FormGroup({
+    code: new FormControl('', Validators.required),
+  });
 
-  ngOnInit() {}
+  constructor(private classService: ClassService) {
+    super();
+  }
+
+  onSubmit() {}
 
 }

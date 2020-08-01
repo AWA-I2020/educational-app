@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { NgxIndexedDBService } from 'ngx-indexed-db';
 import { TeacherService } from '../services/teacher/teacher.service';
 import { User } from '../models/user';
+import { RegisterClassComponent } from './modals/register-class/register-class.component';
 
 @Component({
   selector: "app-student",
@@ -50,13 +51,16 @@ export class StudentPage implements OnInit {
     });
   }
 
-  async showOptions(ev) {
-    const popover = await this.popoverController.create({
-      component: ProfileComponent,
-      event: ev,
-      translucent: true,
+  async openModal() {
+    const modal = await this.modalController.create({
+      component: RegisterClassComponent,
+      componentProps: {
+        modalCtrl: this.modalController,
+        toastController: this.toastController,
+        indexedDbService: this.indexedDbService,
+      },
     });
-    return await popover.present();
+    return await modal.present();
   }
 
   openFirst() {
