@@ -4,26 +4,27 @@
       <h2>{{ user.role }}:</h2>
     </ion-card-title>
   </ion-card-header>
-  <ion-card-content *ngIf='user'>
+  <ion-card-content *ngIf="user">
     <ion-item>
       <h2>Nombre Completo: {{ user.completeName }}</h2>
     </ion-item>
     <ion-item *ngIf="user.email">
       <h2>Correo electronico: {{ user.email }}</h2>
     </ion-item>
-    <ion-item *ngIf="user.role == 'Estudiante'">
-      <ion-grid>
-        <ion-row>
-          <h2>
-            Codigo de estudiante: {{ user.id }}
-          </h2>
-        </ion-row>
-        <ion-row class='ion-justify-content-center'>
-          <ion-button (click)="copyCode()" expand=round color="primary">
+    <ng-template [ngIf]="user.role == 'Estudiante'">
+      <ion-item>
+        <ion-label>Codigo de estudiante:</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" [value]="user.id" readonly></ion-input>
+      </ion-item>
+      <ion-grid fixed>
+        <ion-row class="ion-justify-content-center">
+          <ion-button (click)="copyCode()" expand="round" color="primary">
             Copiar
           </ion-button>
         </ion-row>
       </ion-grid>
-    </ion-item>
+    </ng-template>
   </ion-card-content>
 </ion-card>
