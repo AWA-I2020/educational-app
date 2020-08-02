@@ -8,7 +8,8 @@
 
 ## Instalacion
 - Descargar la rama "develop" de "https://github.com/AWA-I2020/educational-app.git".
-- Dentro de la ruta del proyecto ejecutar el comando: "ionic build --prod"
+- Dentro de la ruta del proyecto ejecutar el comando: "npm install"
+- Luego ejecutar el comando: "ionic build --prod"
 - Entrar a la carpeta "www" y ejecutar el comando: "http-server -o"
 - Desde el navegador al ejecutar el comando anterior, entrar al link que se indica: "127.0.0.1:8080"
 
