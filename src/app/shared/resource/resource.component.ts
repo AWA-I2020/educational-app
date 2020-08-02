@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { Modal } from "src/app/teacher/modals/modal";
+import { Modal } from "src/app/shared/modal";
 import {
   FormControl,
   FormGroup,

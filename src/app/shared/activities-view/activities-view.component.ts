@@ -2,7 +2,7 @@ import { Component, Input } from "@angular/core";
 import { StudentService } from "src/app/services/student/student.service";
 import { StudentActivity } from "src/app/models/student-activity";
 import { FileService } from "src/app/services/file/file.service";
-import { Modal } from "src/app/teacher/modals/modal";
+import { Modal } from "src/app/shared/modal";
 import { User } from "src/app/models/user";
 
 @Component({

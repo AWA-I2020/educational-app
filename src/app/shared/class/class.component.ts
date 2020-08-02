@@ -21,6 +21,7 @@ import { ModalAddActivityQuestionComponent } from "src/app/teacher/modals/modal-
 import { User } from "src/app/models/user";
 import { ShareOptionsComponent } from "../share-options/share-options.component";
 import { ActivityViewComponent } from "../activity-view/activity-view.component";
+import { StudentService } from "src/app/services/student/student.service";
 
 @Component({
   selector: "app-class",
@@ -32,7 +33,7 @@ export class ClassComponent implements OnInit {
   class: Class;
   resources: Resource[] = [];
   activities: Activity[] = [];
-  students: ClassStudent[] = [];
+  students: User[] = [];
   sliderConfig = {
     slidesPerView: 1,
   };
@@ -41,6 +42,7 @@ export class ClassComponent implements OnInit {
     private indexedDb: NgxIndexedDBService,
     private classService: ClassService,
     private resourceService: ResourceService,
+    private studentService: StudentService,
     private activityService: ActivityService,
     private modalController: ModalController,
     private loadingController: LoadingController,
@@ -63,8 +65,23 @@ export class ClassComponent implements OnInit {
         this.activityService.getActivities(this.class.id).subscribe((data) => {
           this.activities = data;
         });
+        this.studentService
+          .getStudentsOfClass(this.class.id)
+          .subscribe((data) => {
+            data.forEach((studentData) => {
+              this.studentService
+                .getStudent(studentData.student_id)
+                .subscribe((student) => {
+                  this.students.push(student);
+                });
+            });
+          });
       });
     });
+  }
+
+  ionViewWillLeave() {
+    this.students = [];
   }
 
   async addResource() {

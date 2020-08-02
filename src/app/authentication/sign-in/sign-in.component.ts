@@ -53,7 +53,7 @@ export class SignInComponent implements OnInit {
                 this.router.navigate(["teacher"]);
               } else {
                 if (user.role === "Estudiante") {
-                  this.router.navigate(["teacher"]);
+                  this.router.navigate(["student"]);
                 } else {
                   this.router.navigate(["parent"]);
                 }
@@ -95,6 +95,7 @@ export class SignInComponent implements OnInit {
     });
     toast.present();
   }
+
   private convertText(password: string, secretPass: string) {
     return CryptoJS.AES.decrypt(password, secretPass).toString(
       CryptoJS.enc.Utf8

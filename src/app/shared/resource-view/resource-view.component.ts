@@ -1,6 +1,6 @@
 import { Component, Input } from "@angular/core";
 import { Resource } from "src/app/models/resource";
-import { Modal } from "src/app/teacher/modals/modal";
+import { Modal } from "src/app/shared/modal";
 import { FileService } from "src/app/services/file/file.service";
 import { ResourceFile } from "src/app/models/resource-file";
 import { NgxIndexedDBService } from "ngx-indexed-db";

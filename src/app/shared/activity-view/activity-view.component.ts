@@ -2,7 +2,7 @@ import { Component, Input } from "@angular/core";
 import { Activity } from "src/app/models/activity";
 import { FileUpload } from "src/app/models/file";
 import { User } from "src/app/models/user";
-import { Modal } from "src/app/teacher/modals/modal";
+import { Modal } from "src/app/shared/modal";
 import { StudentActivity } from "src/app/models/student-activity";
 import { StudentService } from "src/app/services/student/student.service";
 import { ActivitiesViewComponent } from "../activities-view/activities-view.component";

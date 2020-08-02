@@ -82,7 +82,8 @@ ion-popover {
   }
   .popover-wrapper {
     .popover-content {
-      width: 95vw;
+      width: 90vw;
+      max-width: 550px;
     }
   }
 }
@@ -194,7 +195,6 @@ ion-popover {
 
 //     --ion-item-background: #000000;
 //   }
-
 
 //   /*
 //    * Material Design Dark Theme

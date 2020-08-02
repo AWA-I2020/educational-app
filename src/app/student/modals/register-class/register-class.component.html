@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar color=primary>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Registro</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-grid fixed>
+        <ion-row class="ion-justify-content-center">
+          <ion-card-title>Agregar Clase</ion-card-title>
+        </ion-row>
+      </ion-grid>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <ion-item>
+            <ion-label position="floating">Codigo de clase<ion-text color="danger">*</ion-text>
+            </ion-label>
+            <ion-input required formControlName="code" type="text"></ion-input>
+          </ion-item>
+          <ion-grid fixed>
+            <ion-row class="ion-justify-content-center">
+              <ion-fab-button
+                color="primary"
+                type="submit"
+                (click)="onSubmit()"
+                [disabled]="registerForm.invalid"
+              >
+                <ion-icon name="checkmark"></ion-icon>
+              </ion-fab-button>
+            </ion-row>
+          </ion-grid>
+        </form>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
