@@ -86,7 +86,7 @@
               Estudiantes
             </ion-list-header>
             <ion-item button *ngFor="let student of students" (click)="openStudent(student)">
-              <ion-label>Awesome Label</ion-label>
+              <ion-label>{{student.completeName}}</ion-label>
             </ion-item>
           </ion-list>
           <ng-template #noStudents>
