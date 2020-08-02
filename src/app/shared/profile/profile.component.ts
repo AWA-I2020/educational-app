@@ -1,36 +1,33 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { User } from 'src/app/models/user';
-import { PopoverController, ToastController } from '@ionic/angular';
-
+import { Component, OnInit, Input } from "@angular/core";
+import { User } from "src/app/models/user";
+import { PopoverController, ToastController } from "@ionic/angular";
+import { Plugins } from "@capacitor/core";
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss'],
+  selector: "app-profile",
+  templateUrl: "./profile.component.html",
+  styleUrls: ["./profile.component.scss"],
 })
 export class ProfileComponent implements OnInit {
-
   @Input() user: User;
 
   constructor(
-    private toastController: ToastController, 
-    private popover: PopoverController
-    ) { }
+    private toastController: ToastController
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
-  copyCode() {
-    document.addEventListener("copy", (e: ClipboardEvent) => {
-      e.clipboardData.setData("text/plain", this.user.id);
-      e.preventDefault();
-      document.removeEventListener("copy", null);
-    });
-    document.execCommand("copy");
-    this.presentToast("Codigo copiado al portapapeles");
-  }
-
-  closePopover() {
-    this.popover.dismiss();
+  async copyCode() {
+    const { Clipboard } = Plugins;
+    Clipboard.write({
+      string: this.user.id,
+    })
+      .then(() => {
+        this.presentToast("Codigo copiado al portapapeles");
+      })
+      .catch(() => {
+        this.presentToast("Por favor copie manualmente el codigo");
+      });
   }
 
   async presentToast(message: string) {
