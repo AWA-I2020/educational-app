@@ -78,6 +78,10 @@ export class StudentPage implements OnInit {
     return await modal.present();
   }
 
+  openNotifications() {
+    this.router.navigate(["student/notifications"]);
+  }
+
   openFirst() {
     this.menu.enable(true, "first");
     this.menu.open("first");
