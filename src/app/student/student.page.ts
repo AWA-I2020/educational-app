@@ -56,7 +56,7 @@ export class StudentPage implements OnInit {
           }
         });
       this.messagingService.requestPermission(this.user.id);
-      this.messagingService.receiveMessage();
+      this.messagingService.receiveMessage(this.user.id);
     });
   }
 
