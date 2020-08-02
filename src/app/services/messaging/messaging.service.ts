@@ -40,13 +40,15 @@ export class MessagingService {
     });
   }
 
-  receiveMessage() {
+  receiveMessage(id: string) {
     this.angularFireMessaging.messages.subscribe((msg) => {
       this.currentMessage.next(msg);
       let notification: Notification = {
         title: msg["notification"].title,
         body: msg["notification"].body,
-        dateReceived: new Date(Date.now()),
+        id: new Date(Date.now()).toString(),
+        user_id: id,
+        read: false,
       };
       this.presentToast(msg["notification"].body);
       this.dbService.add("notifications", notification);

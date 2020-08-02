@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button (click)="back()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Notificaciones</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+      <ion-list>
+        <ion-list-header *ngIf="user">
+          Notificaciones de {{ user.completeName }}
+        </ion-list-header>
+        <ion-item-sliding *ngFor="let notification of notifications">
+          <ion-item (click)="open(notification.dateReceived)">
+            <ion-icon
+              *ngIf="notification.read"
+              slot="end"
+              name="reader"
+            ></ion-icon>
+            <ion-icon
+              *ngIf="!notification.read"
+              slot="end"
+              name="mail-unread"
+            ></ion-icon>
+            <ion-grid fixed>
+              <ion-row>
+                {{ notification.title }}
+              </ion-row>
+              <ion-row>
+                <p>{{ notification.body }}</p>
+              </ion-row>
+              <ion-row>
+                <p>
+                  {{
+                    notification.dateReceived | date: "EEEE  d LLLL y  HH:mm"
+                  }}
+                </p>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+
+          <ion-item-options side="end">
+            <ion-item-option (click)="delete(notification.id)">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+        <ng-template [ngIf]="notifications.length == 0">
+          <ion-item>
+            <ion-label>No tiene notificaciones</ion-label>
+          </ion-item>
+        </ng-template>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

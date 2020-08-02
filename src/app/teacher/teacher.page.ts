@@ -42,7 +42,7 @@ export class TeacherPage implements OnInit {
         this.classes = classesData;
       });
       this.messagingService.requestPermission(this.user.id);
-      this.messagingService.receiveMessage();
+      this.messagingService.receiveMessage(this.user.id);
     });
   }
 

@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 import { SignInComponent } from "./authentication/sign-in/sign-in.component";
 import { SignUpComponent } from './authentication/sign-up/sign-up.component';
+import { NotificationsComponent } from './shared/notifications/notifications/notifications.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,10 @@ const routes: Routes = [
     path: "parent",
     loadChildren: () =>
       import("./parent/parent.module").then((m) => m.ParentPageModule),
+  },
+  {
+    path: "student/notifications",
+    component: NotificationsComponent
   },
   {
     path: "sign-in",

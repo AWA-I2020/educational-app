@@ -56,7 +56,7 @@ export class StudentPage implements OnInit {
           }
         });
       this.messagingService.requestPermission(this.user.id);
-      this.messagingService.receiveMessage();
+      this.messagingService.receiveMessage(this.user.id);
     });
   }
 
@@ -76,6 +76,10 @@ export class StudentPage implements OnInit {
       },
     });
     return await modal.present();
+  }
+
+  openNotifications() {
+    this.router.navigate(["student/notifications"]);
   }
 
   openFirst() {
