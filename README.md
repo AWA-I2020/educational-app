@@ -16,6 +16,11 @@
 ## Caracteristicas disponibles
 ### PWA
 -  Fase de instalacion desde navegador Google Chrome.
+-  Cache de los archivos para el funcionamiento de la aplicacion.
+-  Almacenamiento de datos obtenidos de firebase gracias a la opcion de disponibilidad offline propia de firebase.
+-  Almacenamiento de archivos de recursos descargados en indexedDB.
+-  Push notifications para el estudiante.
+
 ### Profesor
 -  Registro de Usuario con su respectivo rol.
 -  Registro y obtencion de una nueva clase.
@@ -25,7 +30,8 @@
 -  Obtencion de tareas entregadas por los estudiantes en respectivas actividades.
 -  Obtencion de datos de perfil.
 -  Obtencion de codigo de clase.
--  Obtencion de notificaciones.
+-  Alertas en caso de subir archivos pesados.
+-  Descarga y vista de archivos de recursos y de actividades.
 
 ### Estudiante
 -  Registro de Usuario con su respectivo rol.
@@ -40,13 +46,22 @@
 -  Registro de Usuario con su respectivo rol.
 
 ## Caracteristicas no disponibles
+-  Recuperacion de contrasena no disponible.
 -  Ediciones de una clase, actividad, recurso.
--  Funcion general de rol (Padre de Familia).
+-  Recurso sin estado de edicion, publicado o visto.
+-  Actividad sin control de fecha limite de entrega.
+-  Actividad sin campo para registrar feedback del profesor.
+-  Registro de actividad de cuestionario no disponible.
+-  Funcion general de rol (Padre de Familia). Solo vista al iniciar sesion.
 
 ## Dificultades
 - Creacion de propios cuestionarios dinamicos (actividad cuestionario).
-- Expansion del indexdb.
-- 
+- Expansion del indexedDB.
+- Implementacion de Service Worker personalizado dentro del framework Angular.
+- Backgroud sync no implementado por el service worker que maneja Angular.
+- Poco ejemplo de PWA con framework Angular.
+- Poco conocimiento de javascript para la creacion de la aplicacion, por eso el uso del framework.
+
 
 ## Tecnologias en uso
 - Ionic con Angular - "https://ionicframework.com/docs/angular/your-first-app"
