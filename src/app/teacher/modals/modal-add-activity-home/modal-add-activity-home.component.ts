@@ -50,7 +50,7 @@ export class ModalAddActivityHomeComponent extends Modal {
     this.activityService.addActivity(activity).then(() => {
       let notification: Notification = {
         title: "Nueva actividad",
-        body: `Tu profesor publico una nuevo actividad en ${this.class.subject}`,
+        body: `Tu profesor publico una nueva actividad en ${this.class.subject}`,
       };
       this.studentService
         .getStudentsOfClass(this.class.id)
