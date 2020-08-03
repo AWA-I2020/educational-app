@@ -25,6 +25,7 @@
 -  Obtencion de tareas entregadas por los estudiantes en respectivas actividades.
 -  Obtencion de datos de perfil.
 -  Obtencion de codigo de clase.
+-  Obtencion de notificaciones.
 
 ### Estudiante
 -  Registro de Usuario con su respectivo rol.
@@ -33,6 +34,7 @@
 -  Registro de actividad personal en actividades de clase (tipo tarea).
 -  Obtencion de datos de perfil.
 -  Obtencion de codigo de respectivo estudiante.
+-  Obtencion de notificaciones.
 
 ### Padre de Familia
 -  Registro de Usuario con su respectivo rol.
