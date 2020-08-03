@@ -30,13 +30,13 @@
 -  Registro de Usuario con su respectivo rol.
 -  Registro y obtencion a una clase segun codigo de clase.
 -  Obtencion de recursos de clase (con respectivos archivos).
--  Registro de actividad personal en actividades de clase (tipo tarea)
+-  Registro de actividad personal en actividades de clase (tipo tarea).
+-  Obtencion de datos de perfil.
+-  Obtencion de codigo de respectivo estudiante.
 
 ### Padre de Familia
 -  Registro de Usuario con su respectivo rol.
-- 
-- 
-- 
+
 ## Caracteristicas no disponibles
 -  
 - 
