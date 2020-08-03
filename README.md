@@ -14,6 +14,7 @@
 - Desde el navegador al ejecutar el comando anterior, entrar al link que se indica: "127.0.0.1:8080"
 
 ## Caracteristicas disponibles
+# PWA
 -  
 - 
 - 
