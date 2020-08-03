@@ -40,15 +40,12 @@
 -  Registro de Usuario con su respectivo rol.
 
 ## Caracteristicas no disponibles
--  
-- 
-- 
-- 
-
+-  Ediciones de una clase, actividad, recurso.
+-  Funcion general de rol (Padre de Familia).
 
 ## Dificultades
-- 
-- 
+- Creacion de propios cuestionarios dinamicos (actividad cuestionario).
+- Expansion del indexdb.
 - 
 
 ## Tecnologias en uso
