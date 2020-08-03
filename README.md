@@ -14,7 +14,26 @@
 - Desde el navegador al ejecutar el comando anterior, entrar al link que se indica: "127.0.0.1:8080"
 
 ## Caracteristicas disponibles
--  
+### PWA
+-  Fase de instalacion desde navegador Google Chrome.
+### Profesor
+-  Registro de Usuario con su respectivo rol.
+-  Registro y obtencion de una nueva clase.
+-  Registro y obtencion de recursos de clases (con respectivos archivos).
+-  Registro y obtencion de actividad de clase (tipo tarea).
+-  Obtencion de estudiantes inscritos en la clase.
+-  Obtencion de tareas entregadas por los estudiantes en respectivas actividades.
+-  Obtencion de datos de perfil.
+-  Obtencion de codigo de clase.
+
+### Estudiante
+-  Registro de Usuario con su respectivo rol.
+-  Registro y obtencion a una clase segun codigo de clase.
+-  Obtencion de recursos de clase (con respectivos archivos).
+-  Registro de actividad personal en actividades de clase (tipo tarea)
+
+### Padre de Familia
+-  Registro de Usuario con su respectivo rol.
 - 
 - 
 - 
