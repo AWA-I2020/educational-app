@@ -13,6 +13,12 @@
 - Entrar a la carpeta "www" y ejecutar el comando: "http-server -o"
 - Desde el navegador al ejecutar el comando anterior, entrar al link que se indica: "127.0.0.1:8080"
 
+### Aclaraciones
+- Para probar las notificaciones habilitarlas manualmente al momento de iniciar sesion con el usuario estudiante.
+- Utilizar navegador Chrome para recibir notificaciones.
+- Vista de notificaciones en la vista del estudiante, parte superior derecha (icono campana).
+- Para eliminar notificacion deslizar hacia la izquierda.
+
 ## Caracteristicas disponibles
 ### PWA
 -  Fase de instalacion desde navegador Google Chrome.
